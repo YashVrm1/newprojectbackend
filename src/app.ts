@@ -5,6 +5,7 @@ import lodash from 'lodash';
 import session from "express-session";
 import cors from "cors";
 import csrf from "csurf";
+import cookieParser from "cookie-parser";
 import path from "path";
 import ejs from 'ejs';
 import appRoutes from './routes';
@@ -21,6 +22,7 @@ app.use(express.static("src"));
 app.use(express.static("src/components/public/images"));
 app.use(bodyParser.json());
 app.use(cors());
+app.use(cookieParser());
 app.use(session({
   secret: 'My super session secret',
   cookie: {
