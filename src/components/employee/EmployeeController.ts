@@ -18,7 +18,7 @@ import constant from "../config/constant";
 const app = express();
 export const register: any = (req: Request, res: Response) => {
     console.log("Signup ", req.body);
-    if (req.body.userName && req.body.email && req.body.password && req.body.phone && req.body.employeeName) {
+    if (req.body.userName && req.body.email && req.body.password && req.body.phoneNo && req.body.employeeName) {
         req.body.password = bcrypt.hashSync(req.body.password, 10);
         if (req.body.email.match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)) {
             employeeModel.findOne({ email: req.body.email }, (err, result: any) => {
@@ -56,7 +56,7 @@ export const register: any = (req: Request, res: Response) => {
                                 userName: req.body.userName,
                                 email: req.body.email,
                                 password: req.body.password,
-                                phone: req.body.phone,
+                                phoneNo: req.body.phoneNo,
                                 employeeName: req.body.employeeName,
                                 picture: constant.url + _result.picture,
                                 token: token,
@@ -83,7 +83,6 @@ export const register: any = (req: Request, res: Response) => {
 export const login = (req: Request, res: Response) => {
     console.log("Login hited");
     if (req.body.userName && req.body.password) {
-        const auth: any = req.headers.authorization;
         employeeModel.findOne(
             { userName: req.body.userName }, (err: any, result: any) => {
                 if (err) {
@@ -92,15 +91,13 @@ export const login = (req: Request, res: Response) => {
                     console.log("ids", result._id);
                     bcrypt.compare(
                         req.body.password,
-                        result.toJSON().password,
+                        result.password,
                         (err, data) => {
-                            console.log("result" + data + err);
+                            console.log("result" + result + err);
                             if (err) {
                                 res.status(500).json(err);
                             }
-                            if (data) {
-                                // if (result.status == false) {
-                                // post= db.post++;
+                            else if (data) {
                                 const payload = {
                                     email: result.toJSON().email,
                                     _id: result.toJSON()._id
@@ -116,13 +113,11 @@ export const login = (req: Request, res: Response) => {
                                     email: _result.email,
                                     employeeName: _result.employeeName,
                                     token: token,
+                                    phoneNo: _result.phoneNo,
                                     expiresIn: constant.expiresIn - 86400,
                                     msg: "Successfull Login"
                                 };
-                                res.json(obj);
-                                // // }
-                                // else {
-                                // }
+                                res.status(200).json(obj);
                             } else {
                                 res.status(400).json({
                                     msg: "wrong password"
@@ -142,5 +137,54 @@ export const login = (req: Request, res: Response) => {
             // msg: "userName not registered"
             msg: "Invalid parameters!"
         });
+    }
+};
+export let getEmployee = async (req: Request, res: Response) => {
+    let skip_Value;
+    let limitValue = req.query.limit ? parseInt(req.query.limit) : 10;
+    if (req.query.page != undefined && req.query.page > 1) {
+        skip_Value = limitValue * (req.query.page - 1);
+    } else { skip_Value = 0; }
+    if (req.query.limit != undefined) {
+        limitValue = parseInt(req.query.limit);
+    }
+    let condition: any = {};
+
+    if (req.body.employeeName) {
+        condition.employeeName = new RegExp('^' + req.body.employeeName, 'i');
+    }
+    if (req.body.email) {
+        condition.email = new RegExp('^' + req.body.email, 'i');
+    }
+    if (req.body.userName) {
+        condition.userName = new RegExp('^' + req.body.userName, 'i');
+    }
+    if (req.body.phoneNo) {
+        condition.phoneNo = new RegExp('^' + req.body.phoneNo, 'i');
+    }
+    if (req.body.createdAt) {
+        const searchDate = moment(req.body.createdAt).format('YYYY-MM-DD') + "T00:00:00.000";
+        const searchGtDate = moment(req.body.createdAt).add(1, 'd').format('YYYY-MM-DD') + "T00:00:00.000";
+        let value: any = {};
+        value = {
+            '$lt': searchGtDate,
+            '$gte': searchDate
+        };
+        condition.createdAt = value;
+    }
+    console.log("search Privileges API condition Is!--->", condition);
+    try {
+        const EmployeeData: any = await EmployeeModel.find(condition).populate("Designation").populate("Department").populate("Privileges").populate("createdBy").sort({ createdAt: -1 }).sort({ createdAt: -1 }).skip(skip_Value).limit(limitValue);
+        const totalCount = await EmployeeModel.count({});
+        console.log("total count of search privilege is==>", totalCount);
+        const totalPage = Math.ceil(totalCount / limitValue);
+        console.log("total Page in search privilege filtered===>", totalPage);
+        if (Object.keys(EmployeeData).length > 0) {
+            res.status(200).json({ EmployeeData, totalPage });
+        } else {
+            res.status(200).json({ success: "No Data found", EmployeeData });
+        }
+    } catch (error) {
+        res.status(500).json(error);
     }
 };

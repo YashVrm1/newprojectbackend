@@ -21,7 +21,7 @@ const constant_1 = __importDefault(require("../config/constant"));
 const app = express_1.default();
 exports.register = (req, res) => {
     console.log("Signup ", req.body);
-    if (req.body.userName && req.body.email && req.body.password && req.body.phone && req.body.employeeName) {
+    if (req.body.userName && req.body.email && req.body.password && req.body.phoneNo && req.body.employeeName) {
         req.body.password = bcryptjs_1.default.hashSync(req.body.password, 10);
         if (req.body.email.match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)) {
             EmployeeModel_1.default.findOne({ email: req.body.email }, (err, result) => {
@@ -60,7 +60,7 @@ exports.register = (req, res) => {
                                 userName: req.body.userName,
                                 email: req.body.email,
                                 password: req.body.password,
-                                phone: req.body.phone,
+                                phoneNo: req.body.phoneNo,
                                 employeeName: req.body.employeeName,
                                 picture: constant_1.default.url + _result.picture,
                                 token: token,
@@ -88,21 +88,18 @@ exports.register = (req, res) => {
 exports.login = (req, res) => {
     console.log("Login hited");
     if (req.body.userName && req.body.password) {
-        const auth = req.headers.authorization;
         EmployeeModel_1.default.findOne({ userName: req.body.userName }, (err, result) => {
             if (err) {
                 res.status(500).json(err);
             }
             else if (result) {
                 console.log("ids", result._id);
-                bcryptjs_1.default.compare(req.body.password, result.toJSON().password, (err, data) => {
-                    console.log("result" + data + err);
+                bcryptjs_1.default.compare(req.body.password, result.password, (err, data) => {
+                    console.log("result" + result + err);
                     if (err) {
                         res.status(500).json(err);
                     }
-                    if (data) {
-                        // if (result.status == false) {
-                        // post= db.post++;
+                    else if (data) {
                         const payload = {
                             email: result.toJSON().email,
                             _id: result.toJSON()._id
@@ -118,13 +115,11 @@ exports.login = (req, res) => {
                             email: _result.email,
                             employeeName: _result.employeeName,
                             token: token,
+                            phone: _result.phone,
                             expiresIn: constant_1.default.expiresIn - 86400,
                             msg: "Successfull Login"
                         };
-                        res.json(obj);
-                        // // }
-                        // else {
-                        // }
+                        res.status(200).json(obj);
                     }
                     else {
                         res.status(400).json({

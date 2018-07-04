@@ -3,7 +3,7 @@ import multer from "multer";
 import path from "path";
 import { verifyToken } from '../util/permission';
 import { Request, Response, NextFunction } from 'express';
-import { register, login } from './EmployeeController';
+import { register, login, getEmployee } from './EmployeeController';
 const router = express.Router();
 const storage: any = multer.diskStorage({
     destination: function (req, file, cb: any) {
@@ -23,5 +23,8 @@ router.post('/addEmployee', upload.single('img'), (req: Request, res: Response) 
 });
 router.post('/loginEmployee', (req: Request, res: Response) => {
     login(req, res);
+});
+router.post('/getEmployee', (req: Request, res: Response) => {
+    getEmployee(req, res);
 });
 export default router;

@@ -14,6 +14,9 @@ const EmployeeSchema = new mongoose_1.default.Schema({
     email: {
         type: String
     },
+    password: {
+        type: String
+    },
     phoneNo: {
         type: String
     },

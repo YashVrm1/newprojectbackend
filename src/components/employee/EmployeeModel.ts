@@ -10,6 +10,9 @@ const EmployeeSchema = new mongoose.Schema({
     email: {
         type: String
     },
+    password: {
+        type: String
+    },
     phoneNo: {
         type: String
     },
