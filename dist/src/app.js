@@ -5,6 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const body_parser_1 = __importDefault(require("body-parser"));
+const express_session_1 = __importDefault(require("express-session"));
 const cors_1 = __importDefault(require("cors"));
 const csurf_1 = __importDefault(require("csurf"));
 const routes_1 = __importDefault(require("./routes"));
@@ -17,6 +18,13 @@ app.use(express_1.default.static("src"));
 app.use(express_1.default.static("src/components/public/images"));
 app.use(body_parser_1.default.json());
 app.use(cors_1.default());
+app.use(express_session_1.default({
+    secret: 'My super session secret',
+    cookie: {
+        httpOnly: true,
+        secure: true
+    }
+}));
 app.use(csurf_1.default());
 app.set('port', (process.env.PORT || 5000));
 const routes = routes_1.default(app);
@@ -27,6 +35,7 @@ app.get("/", (req, res) => {
     res.json('HELLO MYPROJECT');
 });
 app.use((req, res, next) => {
+    res.locals._csrf = req.csrfToken();
     console.log(`${req.method} ${req.url}`);
     console.log(req.body);
     next();

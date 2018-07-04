@@ -2,6 +2,7 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import jsonwebtokens from 'jsonwebtoken';
 import lodash from 'lodash';
+import session from "express-session";
 import cors from "cors";
 import csrf from "csurf";
 import path from "path";
@@ -20,6 +21,13 @@ app.use(express.static("src"));
 app.use(express.static("src/components/public/images"));
 app.use(bodyParser.json());
 app.use(cors());
+app.use(session({
+  secret: 'My super session secret',
+  cookie: {
+    httpOnly: true,
+    secure: true
+  }
+}));
 app.use(csrf());
 app.set('port', (process.env.PORT || 5000));
 const routes = appRoutes(app);
@@ -32,6 +40,7 @@ app.get("/", (req: Request, res: Response) => {
   res.json('HELLO MYPROJECT');
 });
 app.use((req: Request, res: Response, next: NextFunction) => {
+  res.locals._csrf = req.csrfToken();
   console.log(`${req.method} ${req.url}`);
   console.log(req.body);
   next();
