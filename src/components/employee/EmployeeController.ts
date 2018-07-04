@@ -139,52 +139,82 @@ export const login = (req: Request, res: Response) => {
         });
     }
 };
-export let getEmployee = async (req: Request, res: Response) => {
-    let skip_Value;
-    let limitValue = req.query.limit ? parseInt(req.query.limit) : 10;
-    if (req.query.page != undefined && req.query.page > 1) {
-        skip_Value = limitValue * (req.query.page - 1);
-    } else { skip_Value = 0; }
-    if (req.query.limit != undefined) {
-        limitValue = parseInt(req.query.limit);
-    }
-    let condition: any = {};
-
-    if (req.body.employeeName) {
-        condition.employeeName = new RegExp('^' + req.body.employeeName, 'i');
-    }
-    if (req.body.email) {
-        condition.email = new RegExp('^' + req.body.email, 'i');
-    }
-    if (req.body.userName) {
-        condition.userName = new RegExp('^' + req.body.userName, 'i');
-    }
-    if (req.body.phoneNo) {
-        condition.phoneNo = new RegExp('^' + req.body.phoneNo, 'i');
-    }
-    if (req.body.createdAt) {
-        const searchDate = moment(req.body.createdAt).format('YYYY-MM-DD') + "T00:00:00.000";
-        const searchGtDate = moment(req.body.createdAt).add(1, 'd').format('YYYY-MM-DD') + "T00:00:00.000";
-        let value: any = {};
-        value = {
-            '$lt': searchGtDate,
-            '$gte': searchDate
-        };
-        condition.createdAt = value;
-    }
-    console.log("search Privileges API condition Is!--->", condition);
+export const getEmployee = async (req: Request, res: Response) => {
     try {
-        const EmployeeData: any = await EmployeeModel.find(condition).populate("Designation").populate("Department").populate("Privileges").populate("createdBy").sort({ createdAt: -1 }).sort({ createdAt: -1 }).skip(skip_Value).limit(limitValue);
-        const totalCount = await EmployeeModel.count({});
-        console.log("total count of search privilege is==>", totalCount);
-        const totalPage = Math.ceil(totalCount / limitValue);
-        console.log("total Page in search privilege filtered===>", totalPage);
-        if (Object.keys(EmployeeData).length > 0) {
-            res.status(200).json({ EmployeeData, totalPage });
-        } else {
-            res.status(200).json({ success: "No Data found", EmployeeData });
+        let skip_Value;
+        let limitValue = req.query.limit ? parseInt(req.query.limit) : 10;
+        if (req.query.page != undefined && req.query.page > 1) {
+            skip_Value = limitValue * (req.query.page - 1);
+        } else { skip_Value = 0; }
+        if (req.query.limit != undefined) {
+            limitValue = parseInt(req.query.limit);
         }
+        const condition: any = {};
+        if (req.body.employeeName) {
+            condition.employeeName = new RegExp('^' + req.body.employeeName, 'i');
+        }
+        if (req.body.email) {
+            condition.email = new RegExp('^' + req.body.email, 'i');
+        }
+        if (req.body.userName) {
+            condition.userName = new RegExp('^' + req.body.userName, 'i');
+        }
+        if (req.body.phoneNo) {
+            condition.phoneNo = new RegExp('^' + req.body.phoneNo, 'i');
+        }
+        if (req.body.createdAt) {
+            const searchDate = moment(req.body.createdAt).format('YYYY-MM-DD') + "T00:00:00.000";
+            const searchGtDate = moment(req.body.createdAt).add(1, 'd').format('YYYY-MM-DD') + "T00:00:00.000";
+            let value: any = {};
+            value = {
+                '$lt': searchGtDate,
+                '$gte': searchDate
+            };
+            condition.createdAt = value;
+        }
+        console.log(" ---- ", condition);
+        await employeeModel.find(condition, { __v: 0 },
+            async (err, data: any) => {
+                console.log(`user:----`, err, data);
+                if (data) {
+                    const count: any = await employeeModel.count(condition);
+                    console.log('count----->', count, limitValue);
+                    const totalPages = Math.ceil(count / limitValue);
+                    console.log('totalpage', totalPages);
+                    res.status(200).json({ data, totalPages });
+                } else {
+                    res.status(400).json("Cannot find data");
+                }
+            }).sort({ createdAt: -1 }).skip(skip_Value).limit(limitValue);
     } catch (error) {
+        console.log("Error Found");
         res.status(500).json(error);
+    }
+};
+export const imgUpload = async (req: Request, res: Response) => {
+    console.log("imgupload api called");
+    try {
+        console.log("File name===>", req.file.filename);
+        employeeModel.findOne({ email: req.body.email }, (err, data: any) => {
+            console.log("userData====> ", data);
+            if (data) {
+                console.log("status---->" + data.status + data.suspend);
+                employeeModel.updateOne(
+                    { email: req.body.email },
+                    { $set: { picture: req.file.filename } },
+                    err => {
+                        res.status(200).json({
+                            picture: constant.url + req.file.filename
+                        });
+                    }
+                );
+
+            } else {
+                throw err;
+            }
+        });
+    } catch (error) {
+        console.log("error = ", error);
+        res.status(400).json(error);
     }
 };

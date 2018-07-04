@@ -115,7 +115,7 @@ exports.login = (req, res) => {
                             email: _result.email,
                             employeeName: _result.employeeName,
                             token: token,
-                            phone: _result.phone,
+                            phoneNo: _result.phoneNo,
                             expiresIn: constant_1.default.expiresIn - 86400,
                             msg: "Successfull Login"
                         };
@@ -143,4 +143,84 @@ exports.login = (req, res) => {
         });
     }
 };
+exports.getEmployee = (req, res) => __awaiter(this, void 0, void 0, function* () {
+    try {
+        let skip_Value;
+        let limitValue = req.query.limit ? parseInt(req.query.limit) : 10;
+        if (req.query.page != undefined && req.query.page > 1) {
+            skip_Value = limitValue * (req.query.page - 1);
+        }
+        else {
+            skip_Value = 0;
+        }
+        if (req.query.limit != undefined) {
+            limitValue = parseInt(req.query.limit);
+        }
+        const condition = {};
+        if (req.body.employeeName) {
+            condition.employeeName = new RegExp('^' + req.body.employeeName, 'i');
+        }
+        if (req.body.email) {
+            condition.email = new RegExp('^' + req.body.email, 'i');
+        }
+        if (req.body.userName) {
+            condition.userName = new RegExp('^' + req.body.userName, 'i');
+        }
+        if (req.body.phoneNo) {
+            condition.phoneNo = new RegExp('^' + req.body.phoneNo, 'i');
+        }
+        if (req.body.createdAt) {
+            const searchDate = moment_timezone_1.default(req.body.createdAt).format('YYYY-MM-DD') + "T00:00:00.000";
+            const searchGtDate = moment_timezone_1.default(req.body.createdAt).add(1, 'd').format('YYYY-MM-DD') + "T00:00:00.000";
+            let value = {};
+            value = {
+                '$lt': searchGtDate,
+                '$gte': searchDate
+            };
+            condition.createdAt = value;
+        }
+        console.log(" ---- ", condition);
+        yield EmployeeModel_1.default.find(condition, { __v: 0 }, (err, data) => __awaiter(this, void 0, void 0, function* () {
+            console.log(`user:----`, err, data);
+            if (data) {
+                const count = yield EmployeeModel_1.default.count(condition);
+                console.log('count----->', count, limitValue);
+                const totalPages = Math.ceil(count / limitValue);
+                console.log('totalpage', totalPages);
+                res.status(200).json({ data, totalPages });
+            }
+            else {
+                res.status(400).json("Cannot find data");
+            }
+        })).sort({ createdAt: -1 }).skip(skip_Value).limit(limitValue);
+    }
+    catch (error) {
+        console.log("Error Found");
+        res.status(500).json(error);
+    }
+});
+exports.imgUpload = (req, res) => __awaiter(this, void 0, void 0, function* () {
+    console.log("imgupload api called");
+    try {
+        console.log("File name===>", req.file.filename);
+        EmployeeModel_1.default.findOne({ email: req.body.email }, (err, data) => {
+            console.log("userData====> ", data);
+            if (data) {
+                console.log("status---->" + data.status + data.suspend);
+                EmployeeModel_1.default.updateOne({ email: req.body.email }, { $set: { picture: req.file.filename } }, err => {
+                    res.status(200).json({
+                        picture: constant_1.default.url + req.file.filename
+                    });
+                });
+            }
+            else {
+                throw err;
+            }
+        });
+    }
+    catch (error) {
+        console.log("error = ", error);
+        res.status(400).json(error);
+    }
+});
 //# sourceMappingURL=EmployeeController.js.map

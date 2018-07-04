@@ -34,5 +34,12 @@ router.post('/addEmployee', upload.single('img'), (req, res) => {
 router.post('/loginEmployee', (req, res) => {
     EmployeeController_1.login(req, res);
 });
+router.post('/getEmployee', (req, res) => {
+    EmployeeController_1.getEmployee(req, res);
+});
+router.post('/imageupload', upload.single('picture'), (req, res) => {
+    // console.log('res in routes', req.body);
+    EmployeeController_1.imgUpload(req, res);
+});
 exports.default = router;
 //# sourceMappingURL=employeeRoutes.js.map
