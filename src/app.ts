@@ -29,6 +29,12 @@ app.use(session({
   }
 }));
 app.use(csrf());
+app.use((req: Request, res: Response, next: NextFunction) => {
+  res.locals._csrf = req.csrfToken();
+  console.log(`${req.method} ${req.url}`);
+  console.log(req.body);
+  next();
+});
 app.set('port', (process.env.PORT || 5000));
 const routes = appRoutes(app);
 
@@ -39,11 +45,4 @@ app.get("/index", (req: Request, res: Response) => {
 app.get("/", (req: Request, res: Response) => {
   res.json('HELLO MYPROJECT');
 });
-app.use((req: Request, res: Response, next: NextFunction) => {
-  res.locals._csrf = req.csrfToken();
-  console.log(`${req.method} ${req.url}`);
-  console.log(req.body);
-  next();
-});
-
 export default app;
