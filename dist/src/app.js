@@ -6,6 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const body_parser_1 = __importDefault(require("body-parser"));
 const cors_1 = __importDefault(require("cors"));
+const csurf_1 = __importDefault(require("csurf"));
 const routes_1 = __importDefault(require("./routes"));
 const mongoose = require('./database/mongoose');
 // const webSocket = require('./socket/websocket');
@@ -16,6 +17,7 @@ app.use(express_1.default.static("src"));
 app.use(express_1.default.static("src/components/public/images"));
 app.use(body_parser_1.default.json());
 app.use(cors_1.default());
+app.use(csurf_1.default());
 app.set('port', (process.env.PORT || 5000));
 const routes = routes_1.default(app);
 app.get("/index", (req, res) => {

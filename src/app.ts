@@ -31,7 +31,7 @@ app.get("/index", (req: Request, res: Response) => {
 app.get("/", (req: Request, res: Response) => {
   res.json('HELLO MYPROJECT');
 });
-app.use((req, res, next) => {
+app.use((req: Request, res: Response, next: NextFunction) => {
   console.log(`${req.method} ${req.url}`);
   console.log(req.body);
   next();
