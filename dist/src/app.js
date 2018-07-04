@@ -22,7 +22,7 @@ app.get("/index", (req, res) => {
     res.sendFile(__dirname + '/home.html');
 });
 app.get("/", (req, res) => {
-    res.json('Hello MyChoice');
+    res.json('HELLO MYPROJECT');
 });
 app.use((req, res, next) => {
     console.log(`${req.method} ${req.url}`);
