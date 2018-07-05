@@ -36,7 +36,7 @@ app.use((req: Request, res: Response, next: NextFunction) => {
   // console.log(`${req.method} ${req.url}`);
   // console.log(req.body);
   // next();
-  var token = req.csrfToken();
+  let token = req.csrfToken();
   res.cookie('XSRF-TOKEN', token);
   res.locals.csrfToken = token;
   next();
