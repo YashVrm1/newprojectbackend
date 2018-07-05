@@ -6,19 +6,24 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = __importDefault(require("mongoose"));
 const EmployeeSchema = new mongoose_1.default.Schema({
     employeeName: {
-        type: String
+        type: String,
+        required: true
     },
     userName: {
-        type: String
+        type: String,
+        required: true
     },
     email: {
-        type: String
+        type: String,
+        required: true
     },
     password: {
-        type: String
+        type: String,
+        required: true
     },
     phoneNo: {
-        type: String
+        type: String,
+        required: true
     },
 }, { timestamps: true });
 exports.default = mongoose_1.default.model('employee', EmployeeSchema);

@@ -18,64 +18,58 @@ import constant from "../config/constant";
 const app = express();
 export const register: any = (req: Request, res: Response) => {
     console.log("Signup ", req.body);
-    if (req.body.userName && req.body.email && req.body.password && req.body.phone && req.body.employeeName) {
-        req.body.password = bcrypt.hashSync(req.body.password, 10);
-        if (req.body.email.match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)) {
-            employeeModel.findOne({ email: req.body.email }, (err, result: any) => {
-                console.log("result ---->", result);
-                if (err) {
-                    res.status(500).json(err);
-                } else if (result) {
-                    res.status(400).json({
-                        msg: "User Already exist"
-                    });
-                } else {
-                    console.log("req.-------->", req.body);
-                    req.body.lastLogin = moment().format();
-                    const user = new employeeModel(req.body);
-                    user.save(async (err, result) => {
-                        if (err) {
-                            console.log("err=", err);
-                            res.json({
-                                err: err
-                            });
-                        } else if (result) {
+    req.body.password = bcrypt.hashSync(req.body.password, 10);
+    if (req.body.email.match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)) {
+        employeeModel.findOne({ email: req.body.email }, (err, result: any) => {
+            console.log("result ---->", result);
+            if (err) {
+                res.status(500).json(err);
+            } else if (result) {
+                res.status(400).json({
+                    msg: "User Already exist"
+                });
+            } else {
+                console.log("req.-------->", req.body);
+                req.body.lastLogin = moment().format();
+                const user = new employeeModel(req.body);
+                user.save(async (err, result) => {
+                    if (err) {
+                        console.log("err=", err);
+                        res.json({
+                            err: err
+                        });
+                    } else if (result) {
 
-                            const payload = {
-                                email: result.toJSON().email,
-                                _id: result.toJSON()._id
-                            };
-                            const token = jwt.sign(payload, jwt_secret, {
-                                algorithm: "HS384",
-                                expiresIn: constant.expiresIn,
-                                issuer: "Yash"
-                            });
-                            const _result = result.toJSON();
+                        const payload = {
+                            email: result.toJSON().email,
+                            _id: result.toJSON()._id
+                        };
+                        const token = jwt.sign(payload, jwt_secret, {
+                            algorithm: "HS384",
+                            expiresIn: constant.expiresIn,
+                            issuer: "Yash"
+                        });
+                        const _result = result.toJSON();
 
-                            const obj = {
-                                userName: req.body.userName,
-                                email: req.body.email,
-                                password: req.body.password,
-                                phone: req.body.phone,
-                                employeeName: req.body.employeeName,
-                                token: token,
-                                expiresIn: constant.expiresIn - 86400
-                            };
-                            res.status(200).json(obj);
+                        const obj = {
+                            userName: req.body.userName,
+                            email: req.body.email,
+                            password: req.body.password,
+                            phone: req.body.phone,
+                            employeeName: req.body.employeeName,
+                            token: token,
+                            expiresIn: constant.expiresIn - 86400
+                        };
+                        res.status(200).json(obj);
 
-                        }
-                    });
-                }
-            });
-        } else {
-            res.status(406).json({
-                statusCode: 406,
-                msg: "fill email details correctley"
-            });
-        }
+                    }
+                });
+            }
+        });
     } else {
-        res.status(400).json({
-            msg: "please fill all details first"
+        res.status(406).json({
+            statusCode: 406,
+            msg: "fill email details correctley"
         });
     }
 };

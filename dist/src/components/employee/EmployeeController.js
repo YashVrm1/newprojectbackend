@@ -21,66 +21,59 @@ const constant_1 = __importDefault(require("../config/constant"));
 const app = express_1.default();
 exports.register = (req, res) => {
     console.log("Signup ", req.body);
-    if (req.body.userName && req.body.email && req.body.password && req.body.phoneNo && req.body.employeeName) {
-        req.body.password = bcryptjs_1.default.hashSync(req.body.password, 10);
-        if (req.body.email.match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)) {
-            EmployeeModel_1.default.findOne({ email: req.body.email }, (err, result) => {
-                console.log("result ---->", result);
-                if (err) {
-                    res.status(500).json(err);
-                }
-                else if (result) {
-                    res.status(400).json({
-                        msg: "User Already exist"
-                    });
-                }
-                else {
-                    console.log("req.-------->", req.body);
-                    req.body.lastLogin = moment_timezone_1.default().format();
-                    const user = new EmployeeModel_1.default(req.body);
-                    user.save((err, result) => __awaiter(this, void 0, void 0, function* () {
-                        if (err) {
-                            console.log("err=", err);
-                            res.json({
-                                err: err
-                            });
-                        }
-                        else if (result) {
-                            const payload = {
-                                email: result.toJSON().email,
-                                _id: result.toJSON()._id
-                            };
-                            const token = jsonwebtoken_1.default.sign(payload, exports.jwt_secret, {
-                                algorithm: "HS384",
-                                expiresIn: constant_1.default.expiresIn,
-                                issuer: "Yash"
-                            });
-                            const _result = result.toJSON();
-                            const obj = {
-                                userName: req.body.userName,
-                                email: req.body.email,
-                                password: req.body.password,
-                                phoneNo: req.body.phoneNo,
-                                employeeName: req.body.employeeName,
-                                token: token,
-                                expiresIn: constant_1.default.expiresIn - 86400
-                            };
-                            res.status(200).json(obj);
-                        }
-                    }));
-                }
-            });
-        }
-        else {
-            res.status(406).json({
-                statusCode: 406,
-                msg: "fill email details correctley"
-            });
-        }
+    req.body.password = bcryptjs_1.default.hashSync(req.body.password, 10);
+    if (req.body.email.match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)) {
+        EmployeeModel_1.default.findOne({ email: req.body.email }, (err, result) => {
+            console.log("result ---->", result);
+            if (err) {
+                res.status(500).json(err);
+            }
+            else if (result) {
+                res.status(400).json({
+                    msg: "User Already exist"
+                });
+            }
+            else {
+                console.log("req.-------->", req.body);
+                req.body.lastLogin = moment_timezone_1.default().format();
+                const user = new EmployeeModel_1.default(req.body);
+                user.save((err, result) => __awaiter(this, void 0, void 0, function* () {
+                    if (err) {
+                        console.log("err=", err);
+                        res.json({
+                            err: err
+                        });
+                    }
+                    else if (result) {
+                        const payload = {
+                            email: result.toJSON().email,
+                            _id: result.toJSON()._id
+                        };
+                        const token = jsonwebtoken_1.default.sign(payload, exports.jwt_secret, {
+                            algorithm: "HS384",
+                            expiresIn: constant_1.default.expiresIn,
+                            issuer: "Yash"
+                        });
+                        const _result = result.toJSON();
+                        const obj = {
+                            userName: req.body.userName,
+                            email: req.body.email,
+                            password: req.body.password,
+                            phone: req.body.phone,
+                            employeeName: req.body.employeeName,
+                            token: token,
+                            expiresIn: constant_1.default.expiresIn - 86400
+                        };
+                        res.status(200).json(obj);
+                    }
+                }));
+            }
+        });
     }
     else {
-        res.status(400).json({
-            msg: "please fill all details first"
+        res.status(406).json({
+            statusCode: 406,
+            msg: "fill email details correctley"
         });
     }
 };
