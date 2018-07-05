@@ -10,6 +10,7 @@ import path from "path";
 import ejs from 'ejs';
 import appRoutes from './routes';
 import { Response, Request, NextFunction } from "express";
+import { log } from 'async';
 const mongoose = require('./database/mongoose');
 // const webSocket = require('./socket/websocket');
 // const crone = require('./crone/crone');
@@ -30,12 +31,13 @@ app.use(session({
     secure: true
   }
 }));
-app.use(csrf());
+app.use(csrf({cookie:true}));
 app.use((req: Request, res: Response, next: NextFunction) => {
   // res.locals._csrf = req.csrfToken();
-  // console.log(`${req.method} ${req.url}`);
+  console.log(`${req.method} ${req.url}`);
   // console.log(req.body);
   // next();
+
   let token = req.csrfToken();
   res.cookie('XSRF-TOKEN', token);
   res.locals.csrfToken = token;
