@@ -32,9 +32,13 @@ app.use(session({
 }));
 app.use(csrf());
 app.use((req: Request, res: Response, next: NextFunction) => {
-  res.locals._csrf = req.csrfToken();
-  console.log(`${req.method} ${req.url}`);
-  console.log(req.body);
+  // res.locals._csrf = req.csrfToken();
+  // console.log(`${req.method} ${req.url}`);
+  // console.log(req.body);
+  // next();
+  var token = req.csrfToken();
+  res.cookie('XSRF-TOKEN', token);
+  res.locals.csrfToken = token;
   next();
 });
 app.set('port', (process.env.PORT || 5000));
