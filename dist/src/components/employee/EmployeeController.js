@@ -62,7 +62,6 @@ exports.register = (req, res) => {
                                 password: req.body.password,
                                 phoneNo: req.body.phoneNo,
                                 employeeName: req.body.employeeName,
-                                picture: constant_1.default.url + _result.picture,
                                 token: token,
                                 expiresIn: constant_1.default.expiresIn - 86400
                             };
@@ -114,7 +113,6 @@ exports.login = (req, res) => {
                             userName: _result.userName,
                             email: _result.email,
                             employeeName: _result.employeeName,
-                            picture: _result.picture,
                             token: token,
                             phoneNo: _result.phoneNo,
                             expiresIn: constant_1.default.expiresIn - 86400,
