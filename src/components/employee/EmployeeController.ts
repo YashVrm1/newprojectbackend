@@ -56,7 +56,7 @@ export const register: any = (req: Request, res: Response) => {
                                 userName: req.body.userName,
                                 email: req.body.email,
                                 password: req.body.password,
-                                phone: req.body.phone,
+                                phoneNo: req.body.phoneNo,
                                 employeeName: req.body.employeeName,
                                 token: token,
                                 expiresIn: constant.expiresIn - 86400
