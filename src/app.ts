@@ -31,11 +31,10 @@ app.use(session({
     secure: true
   }
 }));
-app.use(csrf({cookie:true}));
+app.use(csrf({ cookie: true }));
 app.use((req: Request, res: Response, next: NextFunction) => {
   // res.locals._csrf = req.csrfToken();
   console.log(`${req.method} ${req.url}`);
-  // console.log(req.body);
   // next();
 
   let token = req.csrfToken();
