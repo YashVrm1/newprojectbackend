@@ -112,6 +112,7 @@ export const login = (req: Request, res: Response) => {
                                     userName: _result.userName,
                                     email: _result.email,
                                     employeeName: _result.employeeName,
+                                    picture: _result.picture,
                                     token: token,
                                     phoneNo: _result.phoneNo,
                                     expiresIn: constant.expiresIn - 86400,
@@ -189,32 +190,5 @@ export const getEmployee = async (req: Request, res: Response) => {
     } catch (error) {
         console.log("Error Found");
         res.status(500).json(error);
-    }
-};
-export const imgUpload = async (req: Request, res: Response) => {
-    console.log("imgupload api called");
-    try {
-        console.log("File name===>", req.file.filename);
-        employeeModel.findOne({ email: req.body.email }, (err, data: any) => {
-            console.log("userData====> ", data);
-            if (data) {
-                console.log("status---->" + data.status + data.suspend);
-                employeeModel.updateOne(
-                    { email: req.body.email },
-                    { $set: { picture: req.file.filename } },
-                    err => {
-                        res.status(200).json({
-                            picture: constant.url + req.file.filename
-                        });
-                    }
-                );
-
-            } else {
-                throw err;
-            }
-        });
-    } catch (error) {
-        console.log("error = ", error);
-        res.status(400).json(error);
     }
 };

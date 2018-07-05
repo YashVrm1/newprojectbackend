@@ -16,9 +16,6 @@ const EmployeeSchema = new mongoose.Schema({
     phoneNo: {
         type: String
     },
-    picture: {
-        type: String
-    },
-}, { timestamps: true });
+   }, { timestamps: true });
 
 export default mongoose.model('employee', EmployeeSchema);

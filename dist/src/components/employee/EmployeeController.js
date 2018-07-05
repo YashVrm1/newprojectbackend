@@ -114,6 +114,7 @@ exports.login = (req, res) => {
                             userName: _result.userName,
                             email: _result.email,
                             employeeName: _result.employeeName,
+                            picture: _result.picture,
                             token: token,
                             phoneNo: _result.phoneNo,
                             expiresIn: constant_1.default.expiresIn - 86400,
@@ -197,30 +198,6 @@ exports.getEmployee = (req, res) => __awaiter(this, void 0, void 0, function* ()
     catch (error) {
         console.log("Error Found");
         res.status(500).json(error);
-    }
-});
-exports.imgUpload = (req, res) => __awaiter(this, void 0, void 0, function* () {
-    console.log("imgupload api called");
-    try {
-        console.log("File name===>", req.file.filename);
-        EmployeeModel_1.default.findOne({ email: req.body.email }, (err, data) => {
-            console.log("userData====> ", data);
-            if (data) {
-                console.log("status---->" + data.status + data.suspend);
-                EmployeeModel_1.default.updateOne({ email: req.body.email }, { $set: { picture: req.file.filename } }, err => {
-                    res.status(200).json({
-                        picture: constant_1.default.url + req.file.filename
-                    });
-                });
-            }
-            else {
-                throw err;
-            }
-        });
-    }
-    catch (error) {
-        console.log("error = ", error);
-        res.status(400).json(error);
     }
 });
 //# sourceMappingURL=EmployeeController.js.map

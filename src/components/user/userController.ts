@@ -39,6 +39,14 @@ export const getuser = async (req: Request, res: Response) => {
             condition.address = { $regex: `${req.body.address}`, $options: 'i' };
 
         }
+        if (req.body.age) {
+            condition.age = { $regex: `${req.body.age}`, $options: 'i' };
+
+        }
+        if (req.body.sex) {
+            condition.sex = { $regex: `${req.body.sex}`, $options: 'i' };
+
+        }
         if (req.body.createdAt) {
             const searchDate = moment(req.body.createdAt).format('YYYY-MM-DD') + "T00:00:00.000";
             const searchGtDate = moment(req.body.createdAt).add(1, 'd').format('YYYY-MM-DD') + "T00:00:00.000";
@@ -90,6 +98,8 @@ export const adduser: any = (req: Request, res: Response) => {
                         phoneNo: req.body.phoneNo,
                         email: req.body.email,
                         address: req.body.address,
+                        age: req.body.age,
+                        sex: req.body.sex
 
                     });
                     user.save(async (err: any, data: any) => {
@@ -107,6 +117,8 @@ export const adduser: any = (req: Request, res: Response) => {
                                 phoneNo: data.phoneNo,
                                 email: data.email,
                                 address: data.address,
+                                age: data.age,
+                                sex: data.sex,
                                 msg: "User added successfully",
                             };
                             res.status(200).json(obj);

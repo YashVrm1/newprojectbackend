@@ -14,6 +14,12 @@ const userSchema = new mongoose.Schema({
     address: {
         type: String
     },
+    age: {
+        type: String
+    },
+    sex: {
+        type: String
+    }
 }, { timestamps: true });
 
 export default mongoose.model('user', userSchema);
