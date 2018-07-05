@@ -21,7 +21,7 @@ const constant_1 = __importDefault(require("../config/constant"));
 const app = express_1.default();
 exports.register = (req, res) => {
     console.log("Signup ", req.body);
-    if (req.body.userName && req.body.email && req.body.password && req.body.phone && req.body.employeeName) {
+    if (req.body.userName && req.body.email && req.body.password && req.body.phoneNo && req.body.employeeName) {
         req.body.password = bcryptjs_1.default.hashSync(req.body.password, 10);
         if (req.body.email.match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)) {
             EmployeeModel_1.default.findOne({ email: req.body.email }, (err, result) => {
@@ -60,7 +60,7 @@ exports.register = (req, res) => {
                                 userName: req.body.userName,
                                 email: req.body.email,
                                 password: req.body.password,
-                                phone: req.body.phone,
+                                phoneNo: req.body.phoneNo,
                                 employeeName: req.body.employeeName,
                                 token: token,
                                 expiresIn: constant_1.default.expiresIn - 86400

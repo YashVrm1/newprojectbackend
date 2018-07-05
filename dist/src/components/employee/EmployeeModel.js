@@ -7,23 +7,18 @@ const mongoose_1 = __importDefault(require("mongoose"));
 const EmployeeSchema = new mongoose_1.default.Schema({
     employeeName: {
         type: String,
-        required: true
     },
     userName: {
         type: String,
-        required: true
     },
     email: {
         type: String,
-        required: true
     },
     password: {
         type: String,
-        required: true
     },
     phoneNo: {
         type: String,
-        required: true
     },
 }, { timestamps: true });
 exports.default = mongoose_1.default.model('employee', EmployeeSchema);
