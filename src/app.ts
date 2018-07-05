@@ -23,25 +23,25 @@ app.use(express.static("src"));
 app.use(express.static("src/components/public/images"));
 app.use(bodyParser.json());
 app.use(cors());
-app.use(cookieParser());
-app.use(session({
-  secret: 'My super session secret',
-  cookie: {
-    httpOnly: true,
-    secure: true
-  }
-}));
-app.use(csrf({ cookie: true }));
-app.use((req: Request, res: Response, next: NextFunction) => {
-  // res.locals._csrf = req.csrfToken();
-  console.log(`${req.method} ${req.url}`);
-  // next();
+// app.use(cookieParser());
+// app.use(session({
+//   secret: 'My super session secret',
+//   cookie: {
+//     httpOnly: true,
+//     secure: true
+//   }
+// }));
+// app.use(csrf({ cookie: true }));
+// app.use((req: Request, res: Response, next: NextFunction) => {
+//   // res.locals._csrf = req.csrfToken();
+//   console.log(`${req.method} ${req.url}`);
+//   // next();
 
-  let token = req.csrfToken();
-  res.cookie('XSRF-TOKEN', token);
-  res.locals.csrfToken = token;
-  next();
-});
+//   let token = req.csrfToken();
+//   res.cookie('XSRF-TOKEN', token);
+//   res.locals.csrfToken = token;
+//   next();
+// });
 app.set('port', (process.env.PORT || 5000));
 const routes = appRoutes(app);
 
