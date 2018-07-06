@@ -214,7 +214,7 @@ const surveySchema = new mongoose.Schema({
         },
     },
     parameter1: {
-        modeUsed: {
+        distance: {
             type: String,
             default: ""
         },
@@ -232,7 +232,7 @@ const surveySchema = new mongoose.Schema({
         },
     },
     parameter2: {
-        modeUsed: {
+        cost: {
             type: String,
             default: ""
         },
