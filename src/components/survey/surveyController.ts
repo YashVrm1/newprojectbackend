@@ -17,7 +17,7 @@ export let survey = async (req: Request, res: Response) => {
     console.log("You are in survey app", req.body);
     try {
         const count = 0;
-        userModel.findOne({ _id: req.body._id }, { userName: 1, email: 1, phoneNo: 1 }, async (err, result: any) => {
+        userModel.findOne({ _id: req.body._id }, { userName: 1, email: 1, phoneNo: 1, age: 1, sex: 1 }, async (err, result: any) => {
             // console.log("result ---->", req.body.decoded.employeeName);
             if (err) {
                 res.status(500).json(err);
@@ -110,7 +110,14 @@ export let survey = async (req: Request, res: Response) => {
                 // };
                 // console.log("Obj---->", obj);
                 console.log("result---->", result);
-                const surveyData = new surveymongo(req.body);
+                const surveyData = new surveymongo({
+                    data: req.body,
+                    email: result.email,
+                    userName: result.userName,
+                    age: result.age,
+                    sex: result.sex,
+                    phoneNo: result.phoneNo
+                });
                 const data = await surveyData.save();
                 res.status(201).json(data);
 

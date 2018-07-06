@@ -20,7 +20,7 @@ exports.survey = (req, res) => __awaiter(this, void 0, void 0, function* () {
     console.log("You are in survey app", req.body);
     try {
         const count = 0;
-        userModel_1.default.findOne({ _id: req.body._id }, { userName: 1, email: 1, phoneNo: 1 }, (err, result) => __awaiter(this, void 0, void 0, function* () {
+        userModel_1.default.findOne({ _id: req.body._id }, { userName: 1, email: 1, phoneNo: 1, age: 1, sex: 1 }, (err, result) => __awaiter(this, void 0, void 0, function* () {
             // console.log("result ---->", req.body.decoded.employeeName);
             if (err) {
                 res.status(500).json(err);
@@ -113,7 +113,14 @@ exports.survey = (req, res) => __awaiter(this, void 0, void 0, function* () {
                 // };
                 // console.log("Obj---->", obj);
                 console.log("result---->", result);
-                const surveyData = new surveyModel_1.default(req.body);
+                const surveyData = new surveyModel_1.default({
+                    data: req.body,
+                    email: result.email,
+                    userName: result.userName,
+                    age: result.age,
+                    sex: result.sex,
+                    phoneNo: result.phoneNo
+                });
                 const data = yield surveyData.save();
                 res.status(201).json(data);
             }
