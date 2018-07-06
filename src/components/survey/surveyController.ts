@@ -92,13 +92,13 @@ export let survey = async (req: Request, res: Response) => {
                         egressTrip: req.body.para.egressTrip
                     },
                     parameter1: {
-                        modeUsed1: req.body.parameter1.modeUsed,
+                        modeUsed: req.body.parameter1.modeUsed,
                         access1: req.body.parameter1.access,
                         mainTrip1: req.body.parameter1.parameter1.mainTrip,
                         egressTrip1: req.body.parameter1.egressTrip
                     },
                     parameter2: {
-                        modeUsed1: req.body.parameter2.modeUsed,
+                        modeUsed: req.body.parameter2.modeUsed,
                         access1: req.body.parameter2.access,
                         mainTrip1: req.body.parameter2.mainTrip,
                         egressTrip1: req.body.parameter2.egressTrip
