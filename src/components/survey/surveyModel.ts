@@ -195,7 +195,7 @@ const surveySchema = new mongoose.Schema({
         type: String,
         default: ""
     },
-    parameter: {
+    para: {
         modeUsed: {
             type: String,
             default: ""
@@ -240,14 +240,6 @@ const surveySchema = new mongoose.Schema({
             type: String,
             default: ""
 
-        },
-        cost: {
-            type: String,
-            default: ""
-        },
-        access: {
-            type: String,
-            default: ""
         },
         mainTrip: {
             type: String,
