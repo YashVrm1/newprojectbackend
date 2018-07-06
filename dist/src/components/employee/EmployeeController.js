@@ -87,7 +87,7 @@ exports.register = (req, res) => {
 };
 exports.login = (req, res) => {
     console.log("Login hited");
-    if (req.body.userName && req.body.password) {
+    if (req.body.email && req.body.password) {
         EmployeeModel_1.default.findOne({ email: req.body.email }, (err, result) => {
             if (err) {
                 res.status(500).json(err);

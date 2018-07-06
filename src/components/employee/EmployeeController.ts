@@ -82,7 +82,7 @@ export const register: any = (req: Request, res: Response) => {
 };
 export const login = (req: Request, res: Response) => {
     console.log("Login hited");
-    if (req.body.userName && req.body.password) {
+    if (req.body.email && req.body.password) {
         employeeModel.findOne(
             { email: req.body.email }, (err: any, result: any) => {
                 if (err) {
