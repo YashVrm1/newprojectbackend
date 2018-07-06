@@ -39,7 +39,7 @@ export const createAdmin: any = (req: Request, res: Response) => {
                             const obj = {
                                 userName: req.body.userName,
                                 email: req.body.email,
-                                password: req.body.password,
+
                                 picture: constant.url + _result.picture,
                             };
                             res.status(200).json(obj);
