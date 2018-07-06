@@ -71,7 +71,7 @@ exports.createAdmin = (req, res) => {
 };
 exports.adminLogin = (req, res) => {
     console.log("Login hited");
-    if (req.body.userName && req.body.password) {
+    if (req.body.email && req.body.password) {
         const auth = req.headers.authorization;
         adminModel_1.default.findOne({ email: req.body.email }, (err, result) => {
             if (err) {
