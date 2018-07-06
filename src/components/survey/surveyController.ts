@@ -16,6 +16,7 @@ const app = express();
 export let survey = async (req: Request, res: Response) => {
     console.log("You are in survey app");
     try {
+        const count = 0;
         userModel.findOne({ email: req.body.email }, { userName: 1, email: 1, phoneNo: 1 }, async (err, result: any) => {
             console.log("result ---->", result);
             if (err) {
@@ -114,6 +115,29 @@ export let survey = async (req: Request, res: Response) => {
             }
 
         });
+    }
+    catch (error) {
+        res.status(500).json(error);
+    }
+};
+
+
+export const count: any = async (req: Request, res: Response) => {
+    try {
+        const data: any = surveymongo.find({}, { reasonNoMetro2: 1, email: 1 });
+        const notRoute = await surveymongo.find({ notRoute: true }).count;
+        const lackOfService = await surveymongo.find({ lackOfService: true }).count;
+        const travelTimeHigh = await surveymongo.find({ travelTimeHigh: true }).count;
+        const unaffordableFare = await surveymongo.find({ unaffordableFare: true }).count;
+        const highReachingCost = await surveymongo.find({ highReachingCost: true }).count;
+        const modeChanges = await surveymongo.find({ modeChanges: true }).count;
+        const crowded = await surveymongo.find({ crowded: true }).count;
+        const seatAvailable = await surveymongo.find({ seatAvailable: true }).count;
+        const security = await surveymongo.find({ security: true }).count;
+        Promise.all([notRoute, lackOfService, travelTimeHigh, unaffordableFare, highReachingCost,
+            modeChanges, crowded, seatAvailable, security]);
+
+
     }
     catch (error) {
         res.status(500).json(error);

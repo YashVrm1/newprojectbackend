@@ -19,6 +19,7 @@ const app = express_1.default();
 exports.survey = (req, res) => __awaiter(this, void 0, void 0, function* () {
     console.log("You are in survey app");
     try {
+        const count = 0;
         userModel_1.default.findOne({ email: req.body.email }, { userName: 1, email: 1, phoneNo: 1 }, (err, result) => __awaiter(this, void 0, void 0, function* () {
             console.log("result ---->", result);
             if (err) {
@@ -114,6 +115,25 @@ exports.survey = (req, res) => __awaiter(this, void 0, void 0, function* () {
                 res.status(201).json(surveyData);
             }
         }));
+    }
+    catch (error) {
+        res.status(500).json(error);
+    }
+});
+exports.count = (req, res) => __awaiter(this, void 0, void 0, function* () {
+    try {
+        const data = surveyModel_1.default.find({}, { reasonNoMetro2: 1, email: 1 });
+        const notRoute = yield surveyModel_1.default.find({ notRoute: true }).count;
+        const lackOfService = yield surveyModel_1.default.find({ lackOfService: true }).count;
+        const travelTimeHigh = yield surveyModel_1.default.find({ travelTimeHigh: true }).count;
+        const unaffordableFare = yield surveyModel_1.default.find({ unaffordableFare: true }).count;
+        const highReachingCost = yield surveyModel_1.default.find({ highReachingCost: true }).count;
+        const modeChanges = yield surveyModel_1.default.find({ modeChanges: true }).count;
+        const crowded = yield surveyModel_1.default.find({ crowded: true }).count;
+        const seatAvailable = yield surveyModel_1.default.find({ seatAvailable: true }).count;
+        const security = yield surveyModel_1.default.find({ security: true }).count;
+        Promise.all([notRoute, lackOfService, travelTimeHigh, unaffordableFare, highReachingCost,
+            modeChanges, crowded, seatAvailable, security]);
     }
     catch (error) {
         res.status(500).json(error);

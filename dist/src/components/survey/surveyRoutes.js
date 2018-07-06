@@ -14,5 +14,8 @@ const router = express.Router();
 router.post('/addEmployee', permission_1.verifyToken, (req, res) => {
     surveyController_1.survey(req, res);
 });
+router.post('/count', (req, res) => {
+    surveyController_1.count(req, res);
+});
 exports.default = router;
 //# sourceMappingURL=surveyRoutes.js.map
