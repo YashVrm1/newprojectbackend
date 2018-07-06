@@ -96,15 +96,15 @@ exports.survey = (req, res) => __awaiter(this, void 0, void 0, function* () {
                     },
                     parameter1: {
                         modeUsed: req.body.parameter1.modeUsed,
-                        access1: req.body.parameter1.access,
-                        mainTrip1: req.body.parameter1.parameter1.mainTrip,
-                        egressTrip1: req.body.parameter1.egressTrip
+                        access: req.body.parameter1.access,
+                        mainTrip: req.body.parameter1.parameter1.mainTrip,
+                        egressTrip: req.body.parameter1.egressTrip
                     },
                     parameter2: {
                         modeUsed: req.body.parameter2.modeUsed,
-                        access1: req.body.parameter2.access,
-                        mainTrip1: req.body.parameter2.mainTrip,
-                        egressTrip1: req.body.parameter2.egressTrip
+                        access: req.body.parameter2.access,
+                        mainTrip: req.body.parameter2.mainTrip,
+                        egressTrip: req.body.parameter2.egressTrip
                     },
                 };
                 console.log("Obj---->", obj);
