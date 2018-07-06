@@ -206,15 +206,15 @@ const surveySchema = new mongoose_1.default.Schema({
             type: String,
             default: ""
         },
-        access: {
+        access1: {
             type: String,
             default: ""
         },
-        mainTrip: {
+        mainTrip1: {
             type: String,
             default: ""
         },
-        egressTrip: {
+        egressTrip1: {
             type: String,
             default: ""
         },
@@ -224,15 +224,15 @@ const surveySchema = new mongoose_1.default.Schema({
             type: String,
             default: ""
         },
-        distance: {
+        access2: {
             type: String,
             default: ""
         },
-        mainTrip: {
+        mainTrip2: {
             type: String,
             default: ""
         },
-        egressTrip: {
+        egressTrip2: {
             type: String,
             default: ""
         },
