@@ -8,10 +8,9 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express = __importStar(require("express"));
-const permission_1 = require("../util/permission");
 const surveyController_1 = require("./surveyController");
 const router = express.Router();
-router.post('/addEmployee', permission_1.verifyToken, (req, res) => {
+router.post('/addSurvey', (req, res) => {
     surveyController_1.survey(req, res);
 });
 router.post('/count', (req, res) => {

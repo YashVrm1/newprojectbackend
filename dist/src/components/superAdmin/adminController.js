@@ -73,7 +73,7 @@ exports.adminLogin = (req, res) => {
     console.log("Login hited");
     if (req.body.userName && req.body.password) {
         const auth = req.headers.authorization;
-        adminModel_1.default.findOne({ userName: req.body.userName }, (err, result) => {
+        adminModel_1.default.findOne({ email: req.body.email }, (err, result) => {
             if (err) {
                 res.status(500).json(err);
             }

@@ -18,7 +18,7 @@ import constant from "../config/constant";
 const app = express();
 export const register: any = (req: Request, res: Response) => {
     console.log("Signup ", req.body);
-    if (req.body.userName && req.body.email && req.body.password && req.body.phoneNo && req.body.employeeName && req.body.serveyStation) {
+    if (req.body.userName && req.body.email && req.body.password && req.body.phoneNo && req.body.employeeName && req.body.surveyStation) {
         req.body.password = bcrypt.hashSync(req.body.password, 10);
         if (req.body.email.match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)) {
             employeeModel.findOne({ email: req.body.email }, (err, result: any) => {
@@ -84,7 +84,7 @@ export const login = (req: Request, res: Response) => {
     console.log("Login hited");
     if (req.body.userName && req.body.password) {
         employeeModel.findOne(
-            { userName: req.body.userName }, (err: any, result: any) => {
+            { email: req.body.email }, (err: any, result: any) => {
                 if (err) {
                     res.status(500).json(err);
                 } else if (result) {

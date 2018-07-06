@@ -1,7 +1,7 @@
 import * as express from 'express';
 import multer from "multer";
 import path from "path";
-import { verifyToken } from '../util/permission';
+// import { verifyToken } from '../util/permission';
 import { Request, Response, NextFunction } from 'express';
 import { register, login, getEmployee } from './EmployeeController';
 const router = express.Router();

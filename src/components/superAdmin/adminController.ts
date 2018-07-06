@@ -65,7 +65,7 @@ export const adminLogin = (req: Request, res: Response) => {
     if (req.body.userName && req.body.password) {
         const auth: any = req.headers.authorization;
         Admin.findOne(
-            { userName: req.body.userName }, (err: any, result: any) => {
+            { email: req.body.email }, (err: any, result: any) => {
                 if (err) {
                     res.status(500).json(err);
                 } else if (result) {

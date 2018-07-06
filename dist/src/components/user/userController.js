@@ -81,7 +81,7 @@ exports.getuser = (req, res) => __awaiter(this, void 0, void 0, function* () {
     }
 });
 exports.adduser = (req, res) => {
-    if (req.body.email && req.body.address) {
+    if (req.body.age && req.body.address && req.body.sex) {
         userModel_1.default.findOne({ email: req.body.email }, (err, result) => __awaiter(this, void 0, void 0, function* () {
             console.log("result ---->", result);
             if (err) {
@@ -111,6 +111,7 @@ exports.adduser = (req, res) => {
                     }
                     else if (data) {
                         const obj = {
+                            _id: data._id,
                             userName: data.userName,
                             phoneNo: data.phoneNo,
                             email: data.email,

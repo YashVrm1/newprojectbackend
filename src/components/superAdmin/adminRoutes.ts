@@ -1,7 +1,7 @@
 import { createAdmin, adminLogin, imgUpload } from './adminController';
 import * as express from "express";
 import { Request, Response } from "express";
-import { verifyToken, checkExpiry } from '../util/permission';
+// import { verifyToken, checkExpiry } from '../util/permission';
 import { NextFunction } from 'express-serve-static-core';
 import multer from "multer";
 import path from 'path';

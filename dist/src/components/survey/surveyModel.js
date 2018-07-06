@@ -14,21 +14,25 @@ const surveySchema = new mongoose_1.default.Schema({
     phoneNo: {
         type: String
     },
-    EnumeratorName: {
-        type: String
-    },
+    // EnumeratorName: {
+    //     type: String
+    // },
     personalInformation1: {
         name: {
-            type: String
+            type: String,
+            default: ""
         },
         age: {
-            type: String
+            type: String,
+            default: ""
         },
         mobile: {
-            type: String
+            type: String,
+            default: ""
         },
         gender: {
-            type: String
+            type: String,
+            default: ""
         },
     },
     reasonNoMetro2: {
@@ -69,67 +73,84 @@ const surveySchema = new mongoose_1.default.Schema({
             default: false
         },
         other: {
-            type: String
+            type: String,
+            default: ""
         },
     },
     regularTrip3: {
         origin: {
-            type: String
+            type: String,
+            default: ""
         },
         destination: {
-            type: String
+            type: String,
+            default: ""
         },
         distance: {
-            type: String
+            type: String,
+            default: ""
         },
         startTime: {
-            type: String
+            type: String,
+            default: ""
         },
         timeTaken: {
-            type: String
+            type: String,
+            default: ""
         },
     },
     modeOfTravel: {
         travelType: {
             type: String,
+            default: "",
         },
         travelTrasport: {
             type: String,
+            default: "",
         }
     },
     purposeTrip4: {
-        type: String
+        type: String,
+        default: ""
     },
     commuteTrip: {
         travelTime: {
             type: String,
+            default: "",
         },
         opinionTrasport: {
             type: String,
+            default: "",
         }
     },
     commuteTrip1: {
         cost: {
             type: String,
+            default: "",
         },
         opinionCost: {
             type: String,
+            default: "",
         }
     },
     commuteTrip2: {
         comfort: {
             type: String,
+            default: "",
         },
         opinionComfort: {
             type: String,
+            default: "",
         }
     },
     commuteTrip3: {
         travelSafety: {
             type: String,
+            default: "",
         },
         opinionSafety: {
             type: String,
+            default: "",
         }
     },
     useMetro6: {
@@ -138,82 +159,106 @@ const surveySchema = new mongoose_1.default.Schema({
     },
     vehicleOwnerShip7: {
         cars: {
-            type: String
+            type: String,
+            default: ""
         },
         twoWheeler: {
-            type: String
+            type: String,
+            default: ""
         },
         bicycle: {
-            type: String
+            type: String,
+            default: ""
         },
     },
     costOfTravel8: {
-        type: String
+        type: String,
+        default: ""
     },
     paidByOffice9: {
-        type: String
+        type: String,
+        default: ""
     },
     willingness10: {
-        type: String
+        type: String,
+        default: ""
     },
     parameter: {
         modeUsed: {
-            type: String
+            type: String,
+            default: ""
         },
         distance: {
-            type: String
+            type: String,
+            default: ""
         },
         cost: {
-            type: String
+            type: String,
+            default: ""
         },
         access: {
-            type: String
+            type: String,
+            default: ""
         },
         mainTrip: {
-            type: String
+            type: String,
+            default: ""
         },
         egressTrip: {
-            type: String
+            type: String,
+            default: ""
         },
     },
     parameter1: {
         modeUsed: {
-            type: String
+            type: String,
+            default: ""
         },
         distance: {
-            type: String
+            type: String,
+            default: ""
         },
         cost: {
-            type: String
+            type: String,
+            default: ""
         },
         access: {
-            type: String
+            type: String,
+            default: ""
         },
         mainTrip: {
-            type: String
+            type: String,
+            default: ""
         },
         egressTrip: {
-            type: String
+            type: String,
+            default: ""
         },
     },
     parameter2: {
         modeUsed: {
-            type: String
+            type: String,
+            default: ""
         },
         distance: {
-            type: String
+            type: String,
+            default: ""
         },
         cost: {
-            type: String
+            type: String,
+            default: ""
         },
         access: {
-            type: String
+            type: String,
+            default: ""
         },
         mainTrip: {
-            type: String
+            type: String,
+            default: ""
         },
         egressTrip: {
-            type: String
+            type: String,
+            default: ""
         },
     }
 }, { timestamps: true });
