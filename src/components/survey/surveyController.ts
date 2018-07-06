@@ -92,16 +92,16 @@ export let survey = async (req: Request, res: Response) => {
                         egressTrip: req.body.para.egressTrip
                     },
                     parameter1: {
-                        modeUsed: req.body.parameter1.modeUsed,
-                        access1: req.body.parameter1.access,
-                        mainTrip1: req.body.parameter1.parameter1.mainTrip,
-                        egressTrip1: req.body.parameter1.egressTrip
+                        distance: req.body.parameter1.distance,
+                        access1: req.body.parameter1.access1,
+                        mainTrip1: req.body.parameter1.mainTrip1,
+                        egressTrip1: req.body.parameter1.egressTrip1
                     },
                     parameter2: {
-                        modeUsed: req.body.parameter2.modeUsed,
-                        access1: req.body.parameter2.access,
-                        mainTrip2: req.body.parameter2.mainTrip,
-                        egressTrip1: req.body.parameter2.egressTrip
+                        cost: req.body.parameter2.cost,
+                        access1: req.body.parameter2.access2,
+                        mainTrip2: req.body.parameter2.mainTrip2,
+                        egressTrip1: req.body.parameter2.egressTrip2
                     },
                 };
                 console.log("Obj---->", obj);
