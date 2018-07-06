@@ -55,7 +55,6 @@ export const register: any = (req: Request, res: Response) => {
                             const obj = {
                                 userName: req.body.userName,
                                 email: req.body.email,
-                                password: req.body.password,
                                 phoneNo: req.body.phoneNo,
                                 employeeName: req.body.employeeName,
                                 surveyStation: req.body.surveyStation,
