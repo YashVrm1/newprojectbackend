@@ -39,25 +39,32 @@ const surveySchema = new mongoose.Schema({
             default: false
         },
         travelTimeHigh: {
-            type: Boolean
+            type: Boolean,
+            default: false
         },
         unaffordableFare: {
-            type: Boolean
+            type: Boolean,
+            default: false
         },
         highReachingCost: {
-            type: Boolean
+            type: Boolean,
+            default: false
         },
         modeChanges: {
-            type: Boolean
+            type: Boolean,
+            default: false
         },
         crowded: {
-            type: Boolean
+            type: Boolean,
+            default: false
         },
         seatAvailable: {
-            type: Boolean
+            type: Boolean,
+            default: false
         },
         security: {
-            type: Boolean
+            type: Boolean,
+            default: false
         },
         other: {
             type: String
@@ -98,6 +105,41 @@ const surveySchema = new mongoose.Schema({
         type: String
     },
 
+    commuteTrip: {
+        travelTime: {
+            type: String,
+        },
+        opinionTrasport: {
+            type: String,
+        }
+    },
+
+    commuteTrip1: {
+        cost: {
+            type: String,
+        },
+        opinionCost: {
+            type: String,
+        }
+    },
+
+    commuteTrip2: {
+        comfort: {
+            type: String,
+        },
+        opinionComfort: {
+            type: String,
+        }
+    },
+
+    commuteTrip3: {
+        travelSafety: {
+            type: String,
+        },
+        opinionSafety: {
+            type: String,
+        }
+    },
     useMetro6: {
         type: Boolean,
         default: ""
@@ -125,6 +167,67 @@ const surveySchema = new mongoose.Schema({
 
     willingness10: {
         type: String
+    },
+    parameter: {
+        modeUsed: {
+            type: String
+        },
+        distance: {
+            type: String
+        },
+        cost: {
+            type: String
+        },
+        access: {
+            type: String
+        },
+        mainTrip: {
+            type: String
+        },
+        egressTrip: {
+            type: String
+        },
+    },
+    parameter1: {
+        modeUsed: {
+            type: String
+        },
+        distance: {
+            type: String
+        },
+        cost: {
+            type: String
+        },
+        access: {
+            type: String
+        },
+        mainTrip: {
+            type: String
+        },
+        egressTrip: {
+            type: String
+        },
+    },
+    parameter2: {
+        modeUsed: {
+            type: String
+        },
+        distance: {
+            type: String
+        },
+        cost: {
+            type: String
+        },
+        access: {
+            type: String
+        },
+        mainTrip: {
+            type: String
+        },
+        egressTrip: {
+            type: String
+        },
+
     }
 
 }, { timestamps: true });

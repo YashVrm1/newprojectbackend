@@ -19,7 +19,9 @@ const EmployeeSchema = new mongoose.Schema({
     },
     phoneNo: {
         type: String,
-
+    },
+    surveyStation: {
+        type: String
     },
 }, { timestamps: true });
 

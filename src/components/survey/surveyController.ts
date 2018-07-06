@@ -1,6 +1,7 @@
 import express from "express";
 import surveymongo from "./surveyModel";
 import userModel from "../user/userModel";
+import employee from "../employee/EmployeeModel";
 import bcrypt from "bcryptjs";
 import mongoose from 'mongoose';
 import multer from "multer";
@@ -12,7 +13,7 @@ import { Response, Request, NextFunction } from "express";
 import { json, raw } from "body-parser";
 import constant from "../config/constant";
 const app = express();
-export let addEmployee = async (req: Request, res: Response) => {
+export let survey = async (req: Request, res: Response) => {
     console.log("You are in survey app");
     try {
         userModel.findOne({ email: req.body.email }, { userName: 1, email: 1, phoneNo: 1 }, async (err, result: any) => {
@@ -24,6 +25,7 @@ export let addEmployee = async (req: Request, res: Response) => {
                     email: result.email,
                     user: result.userName,
                     phoneNo: result.phoneNo,
+                    EnumeratorName: req.body.decoded.employeeName,
                     personalInformation1: {
                         name: req.body.name,
                         age: req.body.age,
@@ -54,6 +56,22 @@ export let addEmployee = async (req: Request, res: Response) => {
                         travelType: req.body.travelType,
                         travelTrasport: req.body.travelTrasport
                     },
+                    commuteTrip: {
+                        travelTime: req.body.travelTime,
+                        opinionTrasport: req.body.opinionTrasport
+                    },
+                    commuteTrip1: {
+                        cost: req.body.cost,
+                        opinionCost: req.body.opinionCost
+                    },
+                    commuteTrip2: {
+                        comfort: req.body.comfort,
+                        opinionComfort: req.body.opinionComfort
+                    },
+                    commuteTrip3: {
+                        travelSafety: req.body.travelSafety,
+                        opinionSafety: req.body.opinionSafety
+                    },
                     purposeTrip4: req.body.purposeTrip4,
                     useMetro6: req.body.useMetro6,
                     vehicleOwnerShip7: {
@@ -63,7 +81,31 @@ export let addEmployee = async (req: Request, res: Response) => {
                     },
                     costOfTravel8: req.body.costOfTravel8,
                     paidByOffice9: req.body.paidByOffice9,
-                    willingness10: req.body.willingness10
+                    willingness10: req.body.willingness10,
+                    parameter: {
+                        modeUsed: req.body.modeUsed,
+                        distance: req.body.distance,
+                        cost: req.body.cost,
+                        access: req.body.access,
+                        mainTrip: req.body.mainTrip,
+                        egressTrip: req.body.egressTrip
+                    },
+                    parameter1: {
+                        modeUsed1: req.body.modeUsed,
+                        access1: req.body.access,
+                        distance: req.body.distance,
+                        cost: req.body.cost,
+                        mainTrip1: req.body.mainTrip,
+                        egressTrip1: req.body.egressTrip
+                    },
+                    parameter2: {
+                        modeUsed1: req.body.modeUsed,
+                        access1: req.body.access,
+                        distance: req.body.distance,
+                        cost: req.body.cost,
+                        mainTrip1: req.body.mainTrip,
+                        egressTrip1: req.body.egressTrip
+                    },
                 });
 
                 await surveyData.save();

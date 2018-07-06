@@ -16,7 +16,7 @@ const surveyModel_1 = __importDefault(require("./surveyModel"));
 const userModel_1 = __importDefault(require("../user/userModel"));
 exports.jwt_secret = "ADIOS AMIGOS";
 const app = express_1.default();
-exports.addEmployee = (req, res) => __awaiter(this, void 0, void 0, function* () {
+exports.survey = (req, res) => __awaiter(this, void 0, void 0, function* () {
     console.log("You are in survey app");
     try {
         userModel_1.default.findOne({ email: req.body.email }, { userName: 1, email: 1, phoneNo: 1 }, (err, result) => __awaiter(this, void 0, void 0, function* () {
@@ -29,6 +29,7 @@ exports.addEmployee = (req, res) => __awaiter(this, void 0, void 0, function* ()
                     email: result.email,
                     user: result.userName,
                     phoneNo: result.phoneNo,
+                    EnumeratorName: req.body.decoded.employeeName,
                     personalInformation1: {
                         name: req.body.name,
                         age: req.body.age,
@@ -58,6 +59,22 @@ exports.addEmployee = (req, res) => __awaiter(this, void 0, void 0, function* ()
                         travelType: req.body.travelType,
                         travelTrasport: req.body.travelTrasport
                     },
+                    commuteTrip: {
+                        travelTime: req.body.travelTime,
+                        opinionTrasport: req.body.opinionTrasport
+                    },
+                    commuteTrip1: {
+                        cost: req.body.cost,
+                        opinionCost: req.body.opinionCost
+                    },
+                    commuteTrip2: {
+                        comfort: req.body.comfort,
+                        opinionComfort: req.body.opinionComfort
+                    },
+                    commuteTrip3: {
+                        travelSafety: req.body.travelSafety,
+                        opinionSafety: req.body.opinionSafety
+                    },
                     purposeTrip4: req.body.purposeTrip4,
                     useMetro6: req.body.useMetro6,
                     vehicleOwnerShip7: {
@@ -67,7 +84,31 @@ exports.addEmployee = (req, res) => __awaiter(this, void 0, void 0, function* ()
                     },
                     costOfTravel8: req.body.costOfTravel8,
                     paidByOffice9: req.body.paidByOffice9,
-                    willingness10: req.body.willingness10
+                    willingness10: req.body.willingness10,
+                    parameter: {
+                        modeUsed: req.body.modeUsed,
+                        distance: req.body.distance,
+                        cost: req.body.cost,
+                        access: req.body.access,
+                        mainTrip: req.body.mainTrip,
+                        egressTrip: req.body.egressTrip
+                    },
+                    parameter1: {
+                        modeUsed1: req.body.modeUsed,
+                        access1: req.body.access,
+                        distance: req.body.distance,
+                        cost: req.body.cost,
+                        mainTrip1: req.body.mainTrip,
+                        egressTrip1: req.body.egressTrip
+                    },
+                    parameter2: {
+                        modeUsed1: req.body.modeUsed,
+                        access1: req.body.access,
+                        distance: req.body.distance,
+                        cost: req.body.cost,
+                        mainTrip1: req.body.mainTrip,
+                        egressTrip1: req.body.egressTrip
+                    },
                 });
                 yield surveyData.save();
                 res.status(201).json(surveyData);

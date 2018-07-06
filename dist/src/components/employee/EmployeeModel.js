@@ -20,6 +20,9 @@ const EmployeeSchema = new mongoose_1.default.Schema({
     phoneNo: {
         type: String,
     },
+    surveyStation: {
+        type: String
+    },
 }, { timestamps: true });
 exports.default = mongoose_1.default.model('employee', EmployeeSchema);
 //# sourceMappingURL=EmployeeModel.js.map
