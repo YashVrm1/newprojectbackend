@@ -191,17 +191,52 @@ export const countfalse: any = async (req: Request, res: Response) => {
 };
 export const getSurveyData = async (req: Request, res: Response) => {
     try {
-        await surveymongo.find({}, { _id: 0, __v: 0 },
-            (err: any, data: any) => {
+        const condition: any = {};
+        if (req.body.age) {
+            condition.age = new RegExp('^' + req.body.age, 'i');
+        }
+        if (req.body.email) {
+            condition.email = new RegExp('^' + req.body.email, 'i');
+        }
+        if (req.body.userName) {
+            condition.userName = new RegExp('^' + req.body.userName, 'i');
+        }
+        if (req.body.phoneNo) {
+            condition.phoneNo = new RegExp('^' + req.body.phoneNo, 'i');
+        }
+        if (req.body.sex) {
+            condition.sex = new RegExp('^' + req.body.sex, 'i');
+        }
+        if (req.body.surveyStation) {
+            condition.surveyStation = new RegExp('^' + req.body.surveyStation, 'i');
+        }
+        if (req.body.createdBy) {
+            condition["createdBy.name"] = {
+                $regex: `${req.body.createdBy}`, $options: 'i'
+            };
+        }
+        if (req.body.createdAt) {
+            const searchDate = moment(req.body.createdAt).format('YYYY-MM-DD') + "T00:00:00.000";
+            const searchGtDate = moment(req.body.createdAt).add(1, 'd').format('YYYY-MM-DD') + "T00:00:00.000";
+            let value: any = {};
+            value = {
+                '$lt': searchGtDate,
+                '$gte': searchDate
+            };
+            condition.createdAt = value;
+        }
+        console.log(" ---- ", condition);
+        await surveymongo.find(condition, { __v: 0 },
+            async (err, data: any) => {
                 console.log(`user:----`, err, data);
                 if (data) {
-                    res.json({ data });
-                } else if (err) {
-                    res.status(500).json({ err: err });
+                    res.status(200).json({ data });
+                } else {
+                    res.status(400).json("Cannot find data");
                 }
             });
     } catch (error) {
         console.log("Error Found");
-        res.status(400).json(error);
+        res.status(500).json(error);
     }
 };

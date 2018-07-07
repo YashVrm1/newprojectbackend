@@ -16,6 +16,7 @@ const surveyModel_1 = __importDefault(require("./surveyModel"));
 const userModel_1 = __importDefault(require("../user/userModel"));
 const EmployeeModel_1 = __importDefault(require("../employee/EmployeeModel"));
 const mongoose_1 = __importDefault(require("mongoose"));
+const moment_timezone_1 = __importDefault(require("moment-timezone"));
 exports.jwt_secret = "ADIOS AMIGOS";
 const app = express_1.default();
 exports.survey = (req, res) => __awaiter(this, void 0, void 0, function* () {
@@ -190,19 +191,54 @@ exports.countfalse = (req, res) => __awaiter(this, void 0, void 0, function* () 
 });
 exports.getSurveyData = (req, res) => __awaiter(this, void 0, void 0, function* () {
     try {
-        yield surveyModel_1.default.find({}, { _id: 0, __v: 0 }, (err, data) => {
+        const condition = {};
+        if (req.body.age) {
+            condition.age = new RegExp('^' + req.body.age, 'i');
+        }
+        if (req.body.email) {
+            condition.email = new RegExp('^' + req.body.email, 'i');
+        }
+        if (req.body.userName) {
+            condition.userName = new RegExp('^' + req.body.userName, 'i');
+        }
+        if (req.body.phoneNo) {
+            condition.phoneNo = new RegExp('^' + req.body.phoneNo, 'i');
+        }
+        if (req.body.sex) {
+            condition.sex = new RegExp('^' + req.body.sex, 'i');
+        }
+        if (req.body.surveyStation) {
+            condition.surveyStation = new RegExp('^' + req.body.surveyStation, 'i');
+        }
+        if (req.body.createdBy) {
+            condition["createdBy.name"] = {
+                $regex: `${req.body.createdBy}`, $options: 'i'
+            };
+        }
+        if (req.body.createdAt) {
+            const searchDate = moment_timezone_1.default(req.body.createdAt).format('YYYY-MM-DD') + "T00:00:00.000";
+            const searchGtDate = moment_timezone_1.default(req.body.createdAt).add(1, 'd').format('YYYY-MM-DD') + "T00:00:00.000";
+            let value = {};
+            value = {
+                '$lt': searchGtDate,
+                '$gte': searchDate
+            };
+            condition.createdAt = value;
+        }
+        console.log(" ---- ", condition);
+        yield surveyModel_1.default.find(condition, { __v: 0 }, (err, data) => __awaiter(this, void 0, void 0, function* () {
             console.log(`user:----`, err, data);
             if (data) {
-                res.json({ data });
+                res.status(200).json({ data });
             }
-            else if (err) {
-                res.status(500).json({ err: err });
+            else {
+                res.status(400).json("Cannot find data");
             }
-        });
+        }));
     }
     catch (error) {
         console.log("Error Found");
-        res.status(400).json(error);
+        res.status(500).json(error);
     }
 });
 //# sourceMappingURL=surveyController.js.map
