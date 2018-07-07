@@ -10,10 +10,12 @@ const surveySchema = new mongoose.Schema({
     phoneNo: {
         type: String
     },
-    // EnumeratorName: {
-    //     type: String
-    // },
-
+    enumeratorName: {
+        type: String
+    },
+    surveyStation: {
+        type: String
+    },
     personalInformation1: {
         name: {
             type: String,
@@ -250,6 +252,11 @@ const surveySchema = new mongoose.Schema({
             default: ""
         },
 
+    },
+    createdBy: {
+        name: {
+            type: String
+        }
     }
 
 }, { timestamps: true });

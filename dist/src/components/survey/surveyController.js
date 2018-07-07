@@ -14,14 +14,17 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const surveyModel_1 = __importDefault(require("./surveyModel"));
 const userModel_1 = __importDefault(require("../user/userModel"));
+const EmployeeModel_1 = __importDefault(require("../employee/EmployeeModel"));
+const mongoose_1 = __importDefault(require("mongoose"));
 exports.jwt_secret = "ADIOS AMIGOS";
 const app = express_1.default();
 exports.survey = (req, res) => __awaiter(this, void 0, void 0, function* () {
     console.log("You are in survey app", req.body);
     try {
         const count = 0;
+        const employeeData = yield EmployeeModel_1.default.findById(mongoose_1.default.Types.ObjectId(req.body.decoded._id));
         userModel_1.default.findOne({ _id: req.body._id }, { userName: 1, email: 1, phoneNo: 1, age: 1, sex: 1 }, (err, result) => __awaiter(this, void 0, void 0, function* () {
-            // console.log("result ---->", req.body.decoded.employeeName);
+            console.log("result ---->", employeeData);
             if (err) {
                 res.status(500).json(err);
             }
@@ -32,7 +35,8 @@ exports.survey = (req, res) => __awaiter(this, void 0, void 0, function* () {
                     phoneNo: result.phoneNo,
                     age: result.age,
                     sex: result.sex,
-                    EnumeratorName: req.body.employeeName,
+                    enumeratorName: employeeData.employeeName,
+                    surveyStation: employeeData.surveyStation,
                     personalInformation1: {
                         name: req.body.personalInformation1.name,
                         age: req.body.personalInformation1.age,
@@ -106,6 +110,9 @@ exports.survey = (req, res) => __awaiter(this, void 0, void 0, function* () {
                         mainTrip2: req.body.parameter2.mainTrip2,
                         egressTrip1: req.body.parameter2.egressTrip2
                     },
+                    createdBy: {
+                        name: employeeData.employeeName
+                    }
                 };
                 console.log("Obj---->", obj);
                 console.log("result---->", result);

@@ -113,6 +113,7 @@ export const login = (req: Request, res: Response) => {
                                     employeeName: _result.employeeName,
                                     token: token,
                                     phoneNo: _result.phoneNo,
+                                    surveyStation: _result.surveyStation,
                                     expiresIn: constant.expiresIn - 86400,
                                     msg: "Successfull Login"
                                 };
@@ -140,14 +141,6 @@ export const login = (req: Request, res: Response) => {
 };
 export const getEmployee = async (req: Request, res: Response) => {
     try {
-        let skip_Value;
-        let limitValue = req.query.limit ? parseInt(req.query.limit) : 10;
-        if (req.query.page != undefined && req.query.page > 1) {
-            skip_Value = limitValue * (req.query.page - 1);
-        } else { skip_Value = 0; }
-        if (req.query.limit != undefined) {
-            limitValue = parseInt(req.query.limit);
-        }
         const condition: any = {};
         if (req.body.employeeName) {
             condition.employeeName = new RegExp('^' + req.body.employeeName, 'i');
@@ -176,15 +169,11 @@ export const getEmployee = async (req: Request, res: Response) => {
             async (err, data: any) => {
                 console.log(`user:----`, err, data);
                 if (data) {
-                    const count: any = await employeeModel.count(condition);
-                    console.log('count----->', count, limitValue);
-                    const totalPages = Math.ceil(count / limitValue);
-                    console.log('totalpage', totalPages);
-                    res.status(200).json({ data, totalPages });
+                    res.status(200).json({data});
                 } else {
                     res.status(400).json("Cannot find data");
                 }
-            }).sort({ createdAt: -1 }).skip(skip_Value).limit(limitValue);
+            });
     } catch (error) {
         console.log("Error Found");
         res.status(500).json(error);

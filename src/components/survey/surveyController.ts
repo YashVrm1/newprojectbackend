@@ -17,8 +17,9 @@ export let survey = async (req: Request, res: Response) => {
     console.log("You are in survey app", req.body);
     try {
         const count = 0;
+        const employeeData: any = await employee.findById(mongoose.Types.ObjectId(req.body.decoded._id));
         userModel.findOne({ _id: req.body._id }, { userName: 1, email: 1, phoneNo: 1, age: 1, sex: 1 }, async (err, result: any) => {
-            // console.log("result ---->", req.body.decoded.employeeName);
+            console.log("result ---->", employeeData);
             if (err) {
                 res.status(500).json(err);
             } else if (result) {
@@ -28,7 +29,8 @@ export let survey = async (req: Request, res: Response) => {
                     phoneNo: result.phoneNo,
                     age: result.age,
                     sex: result.sex,
-                    EnumeratorName: req.body.employeeName,
+                    enumeratorName: employeeData.employeeName,
+                    surveyStation: employeeData.surveyStation,
                     personalInformation1: {
                         name: req.body.personalInformation1.name,
                         age: req.body.personalInformation1.age,
@@ -103,6 +105,9 @@ export let survey = async (req: Request, res: Response) => {
                         mainTrip2: req.body.parameter2.mainTrip2,
                         egressTrip1: req.body.parameter2.egressTrip2
                     },
+                    createdBy: {
+                        name: employeeData.employeeName
+                    }
                 };
                 console.log("Obj---->", obj);
                 console.log("result---->", result);

@@ -14,9 +14,12 @@ const surveySchema = new mongoose_1.default.Schema({
     phoneNo: {
         type: String
     },
-    // EnumeratorName: {
-    //     type: String
-    // },
+    enumeratorName: {
+        type: String
+    },
+    surveyStation: {
+        type: String
+    },
     personalInformation1: {
         name: {
             type: String,
@@ -236,6 +239,11 @@ const surveySchema = new mongoose_1.default.Schema({
             type: String,
             default: ""
         },
+    },
+    createdBy: {
+        name: {
+            type: String
+        }
     }
 }, { timestamps: true });
 exports.default = mongoose_1.default.model('survey', surveySchema);

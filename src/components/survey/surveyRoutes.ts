@@ -5,7 +5,7 @@ import { verifyToken } from '../util/auth';
 import { Request, Response, NextFunction } from 'express';
 import { survey, count, countfalse, getSurveyData } from './surveyController';
 const router = express.Router();
-router.post('/addSurvey', (req: Request, res: Response) => {
+router.post('/addSurvey', verifyToken, (req: Request, res: Response) => {
     survey(req, res);
 });
 router.post('/counttrue', (req: Request, res: Response) => {
