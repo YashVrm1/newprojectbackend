@@ -102,29 +102,31 @@ export const adduser: any = (req: Request, res: Response) => {
                         sex: req.body.sex
 
                     });
-                    user.save(async (err: any, data: any) => {
-                        if (err) {
-                            console.log("err=", err);
-                            res.json({
+                    // req.body.loggedIn = moment().format("HH:mm"),
+                        user.save(async (err: any, data: any) => {
+                            if (err) {
+                                console.log("err=", err);
+                                res.json({
 
-                                err: err
-                            });
-                        }
-                        else if (data) {
+                                    err: err
+                                });
+                            }
+                            else if (data) {
 
-                            const obj = {
-                                _id: data._id,
-                                userName: data.userName,
-                                phoneNo: data.phoneNo,
-                                email: data.email,
-                                address: data.address,
-                                age: data.age,
-                                sex: data.sex,
-                                msg: "User added successfully",
-                            };
-                            res.status(200).json(obj);
-                        }
-                    });
+                                const obj = {
+                                    _id: data._id,
+                                    userName: data.userName,
+                                    phoneNo: data.phoneNo,
+                                    email: data.email,
+                                    address: data.address,
+                                    // loggedIn: moment().format("HH:mm"),
+                                    age: data.age,
+                                    sex: data.sex,
+                                    msg: "User added successfully",
+                                };
+                                res.status(200).json(obj);
+                            }
+                        });
                 }
             });
     }

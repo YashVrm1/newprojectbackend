@@ -21,10 +21,12 @@ const surveySchema = new mongoose_1.default.Schema({
         type: String
     },
     enumeratorName: {
-        type: String
+        type: String,
+        default: ""
     },
     surveyStation: {
-        type: String
+        type: String,
+        default: ""
     },
     personalInformation1: {
         name: {
@@ -250,7 +252,7 @@ const surveySchema = new mongoose_1.default.Schema({
         name: {
             type: String
         }
-    }
+    },
 }, { timestamps: true });
 exports.default = mongoose_1.default.model('survey', surveySchema);
 //# sourceMappingURL=surveyModel.js.map

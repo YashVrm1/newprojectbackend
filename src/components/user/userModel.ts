@@ -19,7 +19,11 @@ const userSchema = new mongoose.Schema({
     },
     sex: {
         type: String
-    }
+    },
+    // loggedIn: {
+    //     type: String,
+    //     default: ""
+    // }
 }, { timestamps: true });
 
 export default mongoose.model('user', userSchema);

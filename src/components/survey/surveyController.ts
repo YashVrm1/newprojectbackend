@@ -29,6 +29,7 @@ export let survey = async (req: Request, res: Response) => {
                     phoneNo: result.phoneNo,
                     age: result.age,
                     sex: result.sex,
+                    loggedIn: result.loggedIn,
                     enumeratorName: employeeData.employeeName,
                     surveyStation: employeeData.surveyStation,
                     personalInformation1: {
@@ -107,7 +108,9 @@ export let survey = async (req: Request, res: Response) => {
                     },
                     createdBy: {
                         name: employeeData.employeeName
-                    }
+                    },
+                    // loggedOut: moment().format("HH:mm")
+
                 };
                 console.log("Obj---->", obj);
                 console.log("result---->", result);

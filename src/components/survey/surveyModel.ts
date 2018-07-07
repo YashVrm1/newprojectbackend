@@ -17,10 +17,12 @@ const surveySchema = new mongoose.Schema({
         type: String
     },
     enumeratorName: {
-        type: String
+        type: String,
+        default: ""
     },
     surveyStation: {
-        type: String
+        type: String,
+        default: ""
     },
     personalInformation1: {
         name: {
@@ -263,7 +265,10 @@ const surveySchema = new mongoose.Schema({
         name: {
             type: String
         }
-    }
+    },
+    // loggetOut: {
+    //     type: "String"
+    // }
 
 }, { timestamps: true });
 

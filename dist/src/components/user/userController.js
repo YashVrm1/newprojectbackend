@@ -102,6 +102,7 @@ exports.adduser = (req, res) => {
                     age: req.body.age,
                     sex: req.body.sex
                 });
+                // req.body.loggedIn = moment().format("HH:mm"),
                 user.save((err, data) => __awaiter(this, void 0, void 0, function* () {
                     if (err) {
                         console.log("err=", err);
@@ -116,6 +117,7 @@ exports.adduser = (req, res) => {
                             phoneNo: data.phoneNo,
                             email: data.email,
                             address: data.address,
+                            // loggedIn: moment().format("HH:mm"),
                             age: data.age,
                             sex: data.sex,
                             msg: "User added successfully",

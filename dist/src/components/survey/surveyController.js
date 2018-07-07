@@ -36,6 +36,7 @@ exports.survey = (req, res) => __awaiter(this, void 0, void 0, function* () {
                     phoneNo: result.phoneNo,
                     age: result.age,
                     sex: result.sex,
+                    loggedIn: result.loggedIn,
                     enumeratorName: employeeData.employeeName,
                     surveyStation: employeeData.surveyStation,
                     personalInformation1: {
@@ -113,7 +114,7 @@ exports.survey = (req, res) => __awaiter(this, void 0, void 0, function* () {
                     },
                     createdBy: {
                         name: employeeData.employeeName
-                    }
+                    },
                 };
                 console.log("Obj---->", obj);
                 console.log("result---->", result);

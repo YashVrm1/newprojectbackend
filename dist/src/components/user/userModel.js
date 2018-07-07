@@ -22,7 +22,7 @@ const userSchema = new mongoose_1.default.Schema({
     },
     sex: {
         type: String
-    }
+    },
 }, { timestamps: true });
 exports.default = mongoose_1.default.model('user', userSchema);
 //# sourceMappingURL=userModel.js.map
