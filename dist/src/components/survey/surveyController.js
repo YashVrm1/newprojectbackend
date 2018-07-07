@@ -210,6 +210,9 @@ exports.getSurveyData = (req, res) => __awaiter(this, void 0, void 0, function* 
         if (req.body.surveyStation) {
             condition.surveyStation = new RegExp('^' + req.body.surveyStation, 'i');
         }
+        if (req.body.enumeratorName) {
+            condition.enumeratorName = new RegExp('^' + req.body.enumeratorName, 'i');
+        }
         if (req.body.createdBy) {
             condition["createdBy.name"] = {
                 $regex: `${req.body.createdBy}`, $options: 'i'
