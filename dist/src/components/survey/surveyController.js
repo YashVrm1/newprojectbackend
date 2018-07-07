@@ -193,7 +193,7 @@ exports.getSurveyData = (req, res) => __awaiter(this, void 0, void 0, function* 
         yield surveyModel_1.default.find({}, { _id: 0, __v: 0 }, (err, data) => {
             console.log(`user:----`, err, data);
             if (data) {
-                res.json(data);
+                res.json({ data });
             }
             else if (err) {
                 res.status(500).json({ err: err });

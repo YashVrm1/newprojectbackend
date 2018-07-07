@@ -195,7 +195,7 @@ export const getSurveyData = async (req: Request, res: Response) => {
             (err: any, data: any) => {
                 console.log(`user:----`, err, data);
                 if (data) {
-                    res.json(data);
+                    res.json({ data });
                 } else if (err) {
                     res.status(500).json({ err: err });
                 }
