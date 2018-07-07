@@ -14,6 +14,12 @@ const surveySchema = new mongoose_1.default.Schema({
     phoneNo: {
         type: String
     },
+    age: {
+        type: String
+    },
+    sex: {
+        type: String
+    },
     enumeratorName: {
         type: String
     },
