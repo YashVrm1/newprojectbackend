@@ -152,3 +152,51 @@ export const count: any = async (req: Request, res: Response) => {
         res.status(500).json(error);
     }
 };
+export const countfalse: any = async (req: Request, res: Response) => {
+    try {
+        // const data: any = surveymongo.find({}, { reasonNoMetro2: 1, email: 1 });
+        const notRoute = await surveymongo.find({ "reasonNoMetro2.notRoute": false });
+        const lackOfService = await surveymongo.find({ "reasonNoMetro2.lackOfService": false });
+        const travelTimeHigh = await surveymongo.find({ "reasonNoMetro2.travelTimeHigh": false });
+        const unaffordableFare = await surveymongo.find({ "reasonNoMetro2.unaffordableFare": false });
+        const highReachingCost = await surveymongo.find({ "reasonNoMetro2.highReachingCost": false });
+        const modeChanges = await surveymongo.find({ "reasonNoMetro2.modeChanges": false });
+        const crowded = await surveymongo.find({ "reasonNoMetro2.crowded": false });
+        const seatAvailable = await surveymongo.find({ "reasonNoMetro2.seatAvailable": false });
+        const security = await surveymongo.find({ "reasonNoMetro2.security": false });
+        // Promise.all([notRoute, lackOfService, travelTimeHigh, unaffordableFare, highReachingCost,
+
+        //     modeChanges, crowded, seatAvailable, security]);
+        let obj = {
+            notRoute: notRoute.length,
+            lackOfService: lackOfService.length,
+            travelTimeHigh: travelTimeHigh.length,
+            unaffordableFare: unaffordableFare.length,
+            highReachingCost: highReachingCost.length,
+            modeChanges: modeChanges.length,
+            crowded: crowded.length,
+            seatAvailable: seatAvailable.length,
+            security: security.length,
+        };
+        res.status(200).send({ data: obj });
+    }
+    catch (error) {
+        res.status(500).json(error);
+    }
+};
+export const getSurveyData = async (req: Request, res: Response) => {
+    try {
+        await surveymongo.find({}, { _id: 0, __v: 0 },
+            (err: any, data: any) => {
+                console.log(`user:----`, err, data);
+                if (data) {
+                    res.json(data);
+                } else if (err) {
+                    res.status(500).json({ err: err });
+                }
+            });
+    } catch (error) {
+        console.log("Error Found");
+        res.status(400).json(error);
+    }
+};

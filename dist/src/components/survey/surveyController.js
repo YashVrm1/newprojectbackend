@@ -150,4 +150,52 @@ exports.count = (req, res) => __awaiter(this, void 0, void 0, function* () {
         res.status(500).json(error);
     }
 });
+exports.countfalse = (req, res) => __awaiter(this, void 0, void 0, function* () {
+    try {
+        // const data: any = surveymongo.find({}, { reasonNoMetro2: 1, email: 1 });
+        const notRoute = yield surveyModel_1.default.find({ "reasonNoMetro2.notRoute": false });
+        const lackOfService = yield surveyModel_1.default.find({ "reasonNoMetro2.lackOfService": false });
+        const travelTimeHigh = yield surveyModel_1.default.find({ "reasonNoMetro2.travelTimeHigh": false });
+        const unaffordableFare = yield surveyModel_1.default.find({ "reasonNoMetro2.unaffordableFare": false });
+        const highReachingCost = yield surveyModel_1.default.find({ "reasonNoMetro2.highReachingCost": false });
+        const modeChanges = yield surveyModel_1.default.find({ "reasonNoMetro2.modeChanges": false });
+        const crowded = yield surveyModel_1.default.find({ "reasonNoMetro2.crowded": false });
+        const seatAvailable = yield surveyModel_1.default.find({ "reasonNoMetro2.seatAvailable": false });
+        const security = yield surveyModel_1.default.find({ "reasonNoMetro2.security": false });
+        // Promise.all([notRoute, lackOfService, travelTimeHigh, unaffordableFare, highReachingCost,
+        //     modeChanges, crowded, seatAvailable, security]);
+        let obj = {
+            notRoute: notRoute.length,
+            lackOfService: lackOfService.length,
+            travelTimeHigh: travelTimeHigh.length,
+            unaffordableFare: unaffordableFare.length,
+            highReachingCost: highReachingCost.length,
+            modeChanges: modeChanges.length,
+            crowded: crowded.length,
+            seatAvailable: seatAvailable.length,
+            security: security.length,
+        };
+        res.status(200).send({ data: obj });
+    }
+    catch (error) {
+        res.status(500).json(error);
+    }
+});
+exports.getSurveyData = (req, res) => __awaiter(this, void 0, void 0, function* () {
+    try {
+        yield surveyModel_1.default.find({}, { _id: 0, __v: 0 }, (err, data) => {
+            console.log(`user:----`, err, data);
+            if (data) {
+                res.json(data);
+            }
+            else if (err) {
+                res.status(500).json({ err: err });
+            }
+        });
+    }
+    catch (error) {
+        console.log("Error Found");
+        res.status(400).json(error);
+    }
+});
 //# sourceMappingURL=surveyController.js.map

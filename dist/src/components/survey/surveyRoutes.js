@@ -13,8 +13,14 @@ const router = express.Router();
 router.post('/addSurvey', (req, res) => {
     surveyController_1.survey(req, res);
 });
-router.post('/count', (req, res) => {
+router.post('/counttrue', (req, res) => {
     surveyController_1.count(req, res);
+});
+router.post('/countfalse', (req, res) => {
+    surveyController_1.countfalse(req, res);
+});
+router.post('/getSurvey', (req, res) => {
+    surveyController_1.getSurveyData(req, res);
 });
 exports.default = router;
 //# sourceMappingURL=surveyRoutes.js.map
