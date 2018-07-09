@@ -194,6 +194,10 @@ const surveySchema = new mongoose_1.default.Schema({
         type: String,
         default: ""
     },
+    parkingFees: {
+        type: String,
+        default: ""
+    },
     para: {
         modeUsed: {
             type: String,
