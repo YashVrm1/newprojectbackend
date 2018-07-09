@@ -108,9 +108,9 @@ exports.survey = (req, res) => __awaiter(this, void 0, void 0, function* () {
                     },
                     parameter2: {
                         cost: req.body.parameter2.cost,
-                        access1: req.body.parameter2.access2,
+                        access2: req.body.parameter2.access2,
                         mainTrip2: req.body.parameter2.mainTrip2,
-                        egressTrip1: req.body.parameter2.egressTrip2
+                        egressTrip2: req.body.parameter2.egressTrip2
                     },
                     createdBy: {
                         name: employeeData.employeeName

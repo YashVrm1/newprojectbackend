@@ -39,9 +39,6 @@ exports.getuser = (req, res) => __awaiter(this, void 0, void 0, function* () {
         if (req.body.phoneNo) {
             condition.phoneNo = { $regex: `${req.body.phoneNo}`, $options: 'i' };
         }
-        if (req.body.address) {
-            condition.address = { $regex: `${req.body.address}`, $options: 'i' };
-        }
         if (req.body.age) {
             condition.age = { $regex: `${req.body.age}`, $options: 'i' };
         }
@@ -81,7 +78,7 @@ exports.getuser = (req, res) => __awaiter(this, void 0, void 0, function* () {
     }
 });
 exports.adduser = (req, res) => {
-    if (req.body.age && req.body.address && req.body.sex) {
+    if (req.body.age && req.body.sex) {
         userModel_1.default.findOne({ email: req.body.email }, (err, result) => __awaiter(this, void 0, void 0, function* () {
             console.log("result ---->", result);
             if (err) {
@@ -98,7 +95,6 @@ exports.adduser = (req, res) => {
                     userName: req.body.userName,
                     phoneNo: req.body.phoneNo,
                     email: req.body.email,
-                    address: req.body.address,
                     age: req.body.age,
                     sex: req.body.sex
                 });
@@ -116,7 +112,6 @@ exports.adduser = (req, res) => {
                             userName: data.userName,
                             phoneNo: data.phoneNo,
                             email: data.email,
-                            address: data.address,
                             // loggedIn: moment().format("HH:mm"),
                             age: data.age,
                             sex: data.sex,

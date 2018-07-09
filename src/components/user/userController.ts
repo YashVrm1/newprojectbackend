@@ -35,10 +35,6 @@ export const getuser = async (req: Request, res: Response) => {
             condition.phoneNo = { $regex: `${req.body.phoneNo}`, $options: 'i' };
 
         }
-        if (req.body.address) {
-            condition.address = { $regex: `${req.body.address}`, $options: 'i' };
-
-        }
         if (req.body.age) {
             condition.age = { $regex: `${req.body.age}`, $options: 'i' };
 
@@ -79,7 +75,7 @@ export const getuser = async (req: Request, res: Response) => {
     }
 };
 export const adduser: any = (req: Request, res: Response) => {
-    if (req.body.age && req.body.address && req.body.sex) {
+    if (req.body.age && req.body.sex) {
         usermongo.findOne({ email: req.body.email },
             async (err: any, result: any) => {
                 console.log("result ---->", result);
@@ -97,36 +93,34 @@ export const adduser: any = (req: Request, res: Response) => {
                         userName: req.body.userName,
                         phoneNo: req.body.phoneNo,
                         email: req.body.email,
-                        address: req.body.address,
                         age: req.body.age,
                         sex: req.body.sex
 
                     });
                     // req.body.loggedIn = moment().format("HH:mm"),
-                        user.save(async (err: any, data: any) => {
-                            if (err) {
-                                console.log("err=", err);
-                                res.json({
+                    user.save(async (err: any, data: any) => {
+                        if (err) {
+                            console.log("err=", err);
+                            res.json({
 
-                                    err: err
-                                });
-                            }
-                            else if (data) {
+                                err: err
+                            });
+                        }
+                        else if (data) {
 
-                                const obj = {
-                                    _id: data._id,
-                                    userName: data.userName,
-                                    phoneNo: data.phoneNo,
-                                    email: data.email,
-                                    address: data.address,
-                                    // loggedIn: moment().format("HH:mm"),
-                                    age: data.age,
-                                    sex: data.sex,
-                                    msg: "User added successfully",
-                                };
-                                res.status(200).json(obj);
-                            }
-                        });
+                            const obj = {
+                                _id: data._id,
+                                userName: data.userName,
+                                phoneNo: data.phoneNo,
+                                email: data.email,
+                                // loggedIn: moment().format("HH:mm"),
+                                age: data.age,
+                                sex: data.sex,
+                                msg: "User added successfully",
+                            };
+                            res.status(200).json(obj);
+                        }
+                    });
                 }
             });
     }
