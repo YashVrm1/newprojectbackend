@@ -76,7 +76,7 @@ export const getuser = async (req: Request, res: Response) => {
 };
 export const adduser: any = (req: Request, res: Response) => {
     if (req.body.age && req.body.sex) {
-        usermongo.findOne({ email: req.body.email },
+        usermongo.findOne({ _id: req.body._id },
             async (err: any, result: any) => {
                 console.log("result ---->", result);
                 if (err) {

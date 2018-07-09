@@ -79,7 +79,7 @@ exports.getuser = (req, res) => __awaiter(this, void 0, void 0, function* () {
 });
 exports.adduser = (req, res) => {
     if (req.body.age && req.body.sex) {
-        userModel_1.default.findOne({ email: req.body.email }, (err, result) => __awaiter(this, void 0, void 0, function* () {
+        userModel_1.default.findOne({ _id: req.body._id }, (err, result) => __awaiter(this, void 0, void 0, function* () {
             console.log("result ---->", result);
             if (err) {
                 res.status(500).json(err);
