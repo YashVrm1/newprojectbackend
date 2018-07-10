@@ -20,6 +20,26 @@ const surveySchema = new mongoose.Schema({
         type: String,
         default: ""
     },
+    origin: {
+        latitude: {
+            type: String,
+            default: ""
+        },
+        longitude: {
+            type: String,
+            default: ""
+        }
+    },
+    destination: {
+        latitude1: {
+            type: String,
+            default: ""
+        },
+        longitude1: {
+            type: String,
+            default: ""
+        }
+    },
     surveyStation: {
         type: String,
         default: ""

@@ -142,7 +142,14 @@ exports.updateorigin = (req, res) => __awaiter(this, void 0, void 0, function* (
         }, { new: true }, (err, data) => {
             console.log(`user:----`, err, data);
             if (data) {
-                res.json({ msg: "Origin Updated Successfully" });
+                const _result = data.toJSON();
+                const obj = {
+                    origin: {
+                        latitude: req.body.latitude,
+                        longitude: req.body.longitude
+                    }
+                };
+                res.status(200).json({ obj, msg: "Origin Updated Successfully" });
             }
             else {
                 res.status(400).json({ msg: "Data not found" });
@@ -166,7 +173,14 @@ exports.updatedestination = (req, res) => __awaiter(this, void 0, void 0, functi
         }, { new: true }, (err, data) => {
             console.log(`user:----`, err);
             if (data) {
-                res.json({ msg: "Destination updated Successfully" });
+                const _result = data.toJSON();
+                const obj = {
+                    destination: {
+                        latitude1: req.body.latitude1,
+                        longitude1: req.body.longitude1
+                    }
+                };
+                res.status(200).json({ obj, msg: "Destination updated Successfully" });
             }
             else {
                 res.status(400).json({ msg: "Data not found" });

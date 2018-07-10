@@ -133,21 +133,26 @@ export const adduser: any = (req: Request, res: Response) => {
 };
 export const updateorigin = async (req: Request, res: Response) => {
     try {
-        await usermongo.findOneAndUpdate(
-            { _id: req.body._id },
-            {
-                $set: {
-                    origin: {
-                        latitude: req.body.latitude,
-                        longitude: req.body.longitude
-                    }
+        await usermongo.findOneAndUpdate({ _id: req.body._id }, {
+            $set: {
+                origin: {
+                    latitude: req.body.latitude,
+                    longitude: req.body.longitude
                 }
-            },
+            }
+        },
             { new: true },
             (err, data: any) => {
                 console.log(`user:----`, err, data);
                 if (data) {
-                    res.json({ msg: "Origin Updated Successfully" });
+                    const _result = data.toJSON();
+                    const obj = {
+                        origin: {
+                            latitude: req.body.latitude,
+                            longitude: req.body.longitude
+                        }
+                    };
+                    res.status(200).json({ obj, msg: "Origin Updated Successfully" });
                 } else {
                     res.status(400).json({ msg: "Data not found" });
                 }
@@ -174,7 +179,14 @@ export const updatedestination = async (req: Request, res: Response) => {
             (err, data: any) => {
                 console.log(`user:----`, err);
                 if (data) {
-                    res.json({ msg: "Destination updated Successfully" });
+                    const _result = data.toJSON();
+                    const obj = {
+                        destination: {
+                            latitude1: req.body.latitude1,
+                            longitude1: req.body.longitude1
+                        }
+                    };
+                    res.status(200).json({ obj, msg: "Destination updated Successfully" });
                 } else {
                     res.status(400).json({ msg: "Data not found" });
                 }
