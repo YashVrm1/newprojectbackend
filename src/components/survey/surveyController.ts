@@ -18,7 +18,7 @@ export let survey = async (req: Request, res: Response) => {
     try {
         const count = 0;
         const employeeData: any = await employee.findById(mongoose.Types.ObjectId(req.body.decoded._id));
-        userModel.findOne({ _id: req.body._id }, { userName: 1, email: 1, phoneNo: 1, age: 1, sex: 1 }, async (err, result: any) => {
+        userModel.findOne({ _id: req.body._id }, { userName: 1, email: 1, phoneNo: 1, age: 1, sex: 1, origin: 1, destination: 1 }, async (err, result: any) => {
             console.log("result ---->", employeeData);
             if (err) {
                 res.status(500).json(err);
@@ -29,6 +29,8 @@ export let survey = async (req: Request, res: Response) => {
                     phoneNo: result.phoneNo,
                     age: result.age,
                     sex: result.sex,
+                    origin: result.origin,
+                    destination: result.destination,
                     loggedIn: result.loggedIn,
                     enumeratorName: employeeData.employeeName,
                     surveyStation: employeeData.surveyStation,

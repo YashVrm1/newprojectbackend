@@ -130,4 +130,52 @@ exports.adduser = (req, res) => {
         });
     }
 };
+exports.updateorigin = (req, res) => __awaiter(this, void 0, void 0, function* () {
+    try {
+        yield userModel_1.default.findOneAndUpdate({ _id: req.body._id }, {
+            $set: {
+                origin: {
+                    latitude: req.body.latitude,
+                    longitude: req.body.longitude
+                }
+            }
+        }, { new: true }, (err, data) => {
+            console.log(`user:----`, err, data);
+            if (data) {
+                res.json({ msg: "Origin Updated Successfully" });
+            }
+            else {
+                res.status(400).json({ msg: "Data not found" });
+            }
+        });
+    }
+    catch (error) {
+        console.log("Error Found");
+        res.status(500).json(error);
+    }
+});
+exports.updatedestination = (req, res) => __awaiter(this, void 0, void 0, function* () {
+    try {
+        yield userModel_1.default.findOneAndUpdate({ _id: req.body._id }, {
+            $set: {
+                destination: {
+                    latitude1: req.body.latitude1,
+                    longitude1: req.body.longitude1
+                }
+            }
+        }, { new: true }, (err, data) => {
+            console.log(`user:----`, err);
+            if (data) {
+                res.json({ msg: "Destination updated Successfully" });
+            }
+            else {
+                res.status(400).json({ msg: "Data not found" });
+            }
+        });
+    }
+    catch (error) {
+        console.log("Error Found");
+        res.status(500).json(error);
+    }
+});
 //# sourceMappingURL=userController.js.map

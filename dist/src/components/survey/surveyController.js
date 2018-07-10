@@ -24,7 +24,7 @@ exports.survey = (req, res) => __awaiter(this, void 0, void 0, function* () {
     try {
         const count = 0;
         const employeeData = yield EmployeeModel_1.default.findById(mongoose_1.default.Types.ObjectId(req.body.decoded._id));
-        userModel_1.default.findOne({ _id: req.body._id }, { userName: 1, email: 1, phoneNo: 1, age: 1, sex: 1 }, (err, result) => __awaiter(this, void 0, void 0, function* () {
+        userModel_1.default.findOne({ _id: req.body._id }, { userName: 1, email: 1, phoneNo: 1, age: 1, sex: 1, origin: 1, destination: 1 }, (err, result) => __awaiter(this, void 0, void 0, function* () {
             console.log("result ---->", employeeData);
             if (err) {
                 res.status(500).json(err);
@@ -36,6 +36,8 @@ exports.survey = (req, res) => __awaiter(this, void 0, void 0, function* () {
                     phoneNo: result.phoneNo,
                     age: result.age,
                     sex: result.sex,
+                    origin: result.origin,
+                    destination: result.destination,
                     loggedIn: result.loggedIn,
                     enumeratorName: employeeData.employeeName,
                     surveyStation: employeeData.surveyStation,

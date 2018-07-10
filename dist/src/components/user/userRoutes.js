@@ -16,5 +16,11 @@ router.post('/getuser', (req, res) => {
 router.post('/adduser', (req, res) => {
     userController_1.adduser(req, res);
 });
+router.put('/updateDes', (req, res) => {
+    userController_1.updatedestination(req, res);
+});
+router.put('/updateOrigin', (req, res) => {
+    userController_1.updateorigin(req, res);
+});
 exports.default = router;
 //# sourceMappingURL=userRoutes.js.map

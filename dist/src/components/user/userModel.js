@@ -20,6 +20,30 @@ const userSchema = new mongoose_1.default.Schema({
     sex: {
         type: String
     },
+    origin: {
+        latitude: {
+            type: String,
+            default: ""
+        },
+        longitude: {
+            type: String,
+            default: ""
+        }
+    },
+    destination: {
+        latitude1: {
+            type: String,
+            default: ""
+        },
+        longitude1: {
+            type: String,
+            default: ""
+        }
+    }
+    // loggedIn: {
+    //     type: String,
+    //     default: ""
+    // }
 }, { timestamps: true });
 exports.default = mongoose_1.default.model('user', userSchema);
 //# sourceMappingURL=userModel.js.map
