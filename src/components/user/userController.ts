@@ -132,31 +132,31 @@ export const adduser: any = (req: Request, res: Response) => {
     }
 };
 export const updateorigin = async (req: Request, res: Response) => {
+    console.log("body", req.body);
+
     try {
         await usermongo.findOneAndUpdate({ _id: req.body._id }, {
             $set: {
                 origin: {
-                    latitude: req.body.latitude,
-                    longitude: req.body.longitude
+                    latitude: req.body.origin.latitude,
+                    longitude: req.body.origin.longitude
                 }
             }
-        },
-            { new: true },
-            (err, data: any) => {
-                console.log(`user:----`, err, data);
-                if (data) {
-                    const _result = data.toJSON();
-                    const obj = {
-                        origin: {
-                            latitude: req.body.latitude,
-                            longitude: req.body.longitude
-                        }
-                    };
-                    res.status(200).json({ obj, msg: "Origin Updated Successfully" });
-                } else {
-                    res.status(400).json({ msg: "Data not found" });
-                }
+        }, { new: true }, (err, data: any) => {
+            console.log(`user:----`, err, data);
+            if (data) {
+                const _result = data.toJSON();
+                const obj = {
+                    origin: {
+                        latitude: req.body.origin.latitude,
+                        longitude: req.body.origin.longitude
+                    }
+                };
+                res.status(200).json({ obj, msg: "Origin Updated Successfully" });
+            } else {
+                res.status(400).json({ msg: "Data not found" });
             }
+        }
         );
     } catch (error) {
         console.log("Error Found");
@@ -170,20 +170,18 @@ export const updatedestination = async (req: Request, res: Response) => {
             {
                 $set: {
                     destination: {
-                        latitude1: req.body.latitude1,
-                        longitude1: req.body.longitude1
+                        latitude1: req.body.destination.latitude1,
+                        longitude1: req.body.destination.longitude1
                     }
                 }
-            },
-            { new: true },
-            (err, data: any) => {
+            }, { new: true }, (err, data: any) => {
                 console.log(`user:----`, err);
                 if (data) {
                     const _result = data.toJSON();
                     const obj = {
                         destination: {
-                            latitude1: req.body.latitude1,
-                            longitude1: req.body.longitude1
+                            latitude1: req.body.destination.latitude1,
+                            longitude1: req.body.destination.longitude1
                         }
                     };
                     res.status(200).json({ obj, msg: "Destination updated Successfully" });

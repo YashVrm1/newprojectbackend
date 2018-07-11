@@ -131,12 +131,13 @@ exports.adduser = (req, res) => {
     }
 };
 exports.updateorigin = (req, res) => __awaiter(this, void 0, void 0, function* () {
+    console.log("body", req.body);
     try {
         yield userModel_1.default.findOneAndUpdate({ _id: req.body._id }, {
             $set: {
                 origin: {
-                    latitude: req.body.latitude,
-                    longitude: req.body.longitude
+                    latitude: req.body.origin.latitude,
+                    longitude: req.body.origin.longitude
                 }
             }
         }, { new: true }, (err, data) => {
@@ -145,8 +146,8 @@ exports.updateorigin = (req, res) => __awaiter(this, void 0, void 0, function* (
                 const _result = data.toJSON();
                 const obj = {
                     origin: {
-                        latitude: req.body.latitude,
-                        longitude: req.body.longitude
+                        latitude: req.body.origin.latitude,
+                        longitude: req.body.origin.longitude
                     }
                 };
                 res.status(200).json({ obj, msg: "Origin Updated Successfully" });
@@ -166,8 +167,8 @@ exports.updatedestination = (req, res) => __awaiter(this, void 0, void 0, functi
         yield userModel_1.default.findOneAndUpdate({ _id: req.body._id }, {
             $set: {
                 destination: {
-                    latitude1: req.body.latitude1,
-                    longitude1: req.body.longitude1
+                    latitude1: req.body.destination.latitude1,
+                    longitude1: req.body.destination.longitude1
                 }
             }
         }, { new: true }, (err, data) => {
@@ -176,8 +177,8 @@ exports.updatedestination = (req, res) => __awaiter(this, void 0, void 0, functi
                 const _result = data.toJSON();
                 const obj = {
                     destination: {
-                        latitude1: req.body.latitude1,
-                        longitude1: req.body.longitude1
+                        latitude1: req.body.destination.latitude1,
+                        longitude1: req.body.destination.longitude1
                     }
                 };
                 res.status(200).json({ obj, msg: "Destination updated Successfully" });
