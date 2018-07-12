@@ -73,8 +73,8 @@ export let survey = async (req: Request, res: Response) => {
                         opinionCost: req.body.commuteTrip1.opinionCost
                     },
                     commuteTrip2: {
-                        comfort: req.body.comfort,
-                        opinionComfort: req.body.opinionComfort
+                        comfort: req.body.commuteTrip2.comfort,
+                        opinionComfort: req.body.commuteTrip2.opinionComfort
                     },
                     commuteTrip3: {
                         travelSafety: req.body.commuteTrip3.travelSafety,
