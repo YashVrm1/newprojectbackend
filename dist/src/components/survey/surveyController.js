@@ -79,8 +79,8 @@ exports.survey = (req, res) => __awaiter(this, void 0, void 0, function* () {
                         opinionCost: req.body.commuteTrip1.opinionCost
                     },
                     commuteTrip2: {
-                        comfort: req.body.comfort,
-                        opinionComfort: req.body.opinionComfort
+                        comfort: req.body.commuteTrip2.comfort,
+                        opinionComfort: req.body.commuteTrip2.opinionComfort
                     },
                     commuteTrip3: {
                         travelSafety: req.body.commuteTrip3.travelSafety,
@@ -117,6 +117,8 @@ exports.survey = (req, res) => __awaiter(this, void 0, void 0, function* () {
                     createdBy: {
                         name: employeeData.employeeName
                     },
+                    stations: req.body.stations
+                    // loggedOut: moment().format("HH:mm")
                 };
                 console.log("Obj---->", obj);
                 console.log("result---->", result);

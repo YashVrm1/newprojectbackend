@@ -272,6 +272,9 @@ const surveySchema = new mongoose_1.default.Schema({
             default: ""
         },
     },
+    stations: {
+        type: String
+    },
     createdBy: {
         name: {
             type: String

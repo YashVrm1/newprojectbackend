@@ -111,6 +111,7 @@ export let survey = async (req: Request, res: Response) => {
                     createdBy: {
                         name: employeeData.employeeName
                     },
+                    stations: req.body.stations
                     // loggedOut: moment().format("HH:mm")
 
                 };
