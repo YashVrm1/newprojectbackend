@@ -111,7 +111,8 @@ export let survey = async (req: Request, res: Response) => {
                     createdBy: {
                         name: employeeData.employeeName
                     },
-                    stations: req.body.stations
+                    stations: req.body.stations,
+                    reasonForLeavingMetro: req.body.reasonForLeavingMetro
                     // loggedOut: moment().format("HH:mm")
 
                 };
@@ -200,6 +201,12 @@ export const getSurveyData = async (req: Request, res: Response) => {
         const condition: any = {};
         if (req.body.age) {
             condition.age = new RegExp('^' + req.body.age, 'i');
+        }
+        if (req.body.stations) {
+            condition.stations = new RegExp('^' + req.body.stations, 'i');
+        }
+        if (req.body.reasonForLeavingMetro) {
+            condition.reasonForLeavingMetro = new RegExp('^' + req.body.reasonForLeavingMetro, 'i');
         }
         if (req.body.email) {
             condition.email = new RegExp('^' + req.body.email, 'i');
