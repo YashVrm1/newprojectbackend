@@ -199,7 +199,7 @@ export const countfalse: any = async (req: Request, res: Response) => {
 export const getSurveyData = async (req: Request, res: Response) => {
     try {
         let skip_Value;
-        let limitValue = req.query.limit ? parseInt(req.query.limit) : 10;
+        let limitValue = req.query.limit ? parseInt(req.query.limit) : 200;
         if (req.query.page != undefined && req.query.page > 1) {
             skip_Value = limitValue * (req.query.page - 1);
         } else { skip_Value = 0; }
@@ -207,61 +207,59 @@ export const getSurveyData = async (req: Request, res: Response) => {
             limitValue = parseInt(req.query.limit);
         }
         const condition: any = {};
-        if (true) {
-            condition.transferAction = true;
-            if (req.body.age) {
-                condition.age = new RegExp('^' + req.body.age, 'i');
-            }
-            if (req.body.stations) {
-                condition.stations = new RegExp('^' + req.body.stations, 'i');
-            }
-            if (req.body.reasonForLeavingMetro) {
-                condition.reasonForLeavingMetro = new RegExp('^' + req.body.reasonForLeavingMetro, 'i');
-            }
-            if (req.body.email) {
-                condition.email = new RegExp('^' + req.body.email, 'i');
-            }
-            if (req.body.userName) {
-                condition.userName = new RegExp('^' + req.body.userName, 'i');
-            }
-            if (req.body.phoneNo) {
-                condition.phoneNo = new RegExp('^' + req.body.phoneNo, 'i');
-            }
-            if (req.body.sex) {
-                condition.sex = new RegExp('^' + req.body.sex, 'i');
-            }
-            if (req.body.surveyStation) {
-                condition.surveyStation = new RegExp('^' + req.body.surveyStation, 'i');
-            }
-            if (req.body.enumeratorName) {
-                condition.enumeratorName = new RegExp('^' + req.body.enumeratorName, 'i');
-            }
-            if (req.body.createdBy) {
-                condition["createdBy.name"] = {
-                    $regex: `${req.body.createdBy}`, $options: 'i'
-                };
-            }
-            if (req.body.createdAt) {
-                const searchDate = moment(req.body.createdAt).format('YYYY-MM-DD') + "T00:00:00.000";
-                const searchGtDate = moment(req.body.createdAt).add(1, 'd').format('YYYY-MM-DD') + "T00:00:00.000";
-                let value: any = {};
-                value = {
-                    '$lt': searchGtDate,
-                    '$gte': searchDate
-                };
-                condition.createdAt = value;
-            }
-            await surveymongo.find(condition, { __v: 0 },
-                async (err: any, data: any) => {
-                    if (data) {
-                        const count: any = await surveymongo.count(condition);
-                        const totalPages = Math.ceil(count / limitValue);
-                        res.status(200).json({ data, totalPages });
-                    } else {
-                        res.status(400).json("Cannot find data");
-                    }
-                }).sort({ createdAt: -1 }).skip(skip_Value).limit(limitValue);
+        if (req.body.age) {
+            condition.age = new RegExp('^' + req.body.age, 'i');
         }
+        if (req.body.stations) {
+            condition.stations = new RegExp('^' + req.body.stations, 'i');
+        }
+        if (req.body.reasonForLeavingMetro) {
+            condition.reasonForLeavingMetro = new RegExp('^' + req.body.reasonForLeavingMetro, 'i');
+        }
+        if (req.body.email) {
+            condition.email = new RegExp('^' + req.body.email, 'i');
+        }
+        if (req.body.userName) {
+            condition.userName = new RegExp('^' + req.body.userName, 'i');
+        }
+        if (req.body.phoneNo) {
+            condition.phoneNo = new RegExp('^' + req.body.phoneNo, 'i');
+        }
+        if (req.body.sex) {
+            condition.sex = new RegExp('^' + req.body.sex, 'i');
+        }
+        if (req.body.surveyStation) {
+            condition.surveyStation = new RegExp('^' + req.body.surveyStation, 'i');
+        }
+        if (req.body.enumeratorName) {
+            condition.enumeratorName = new RegExp('^' + req.body.enumeratorName, 'i');
+        }
+        if (req.body.createdBy) {
+            condition["createdBy.name"] = {
+                $regex: `${req.body.createdBy}`, $options: 'i'
+            };
+        }
+        if (req.body.createdAt) {
+            const searchDate = moment(req.body.createdAt).format('YYYY-MM-DD') + "T00:00:00.000";
+            const searchGtDate = moment(req.body.createdAt).add(1, 'd').format('YYYY-MM-DD') + "T00:00:00.000";
+            let value: any = {};
+            value = {
+                '$lt': searchGtDate,
+                '$gte': searchDate
+            };
+            condition.createdAt = value;
+        }
+        await surveymongo.find(condition, { __v: 0 },
+            async (err: any, data: any) => {
+                if (data) {
+                    const count: any = await surveymongo.count(condition);
+                    const totalPages = Math.ceil(count / limitValue);
+                    res.status(200).json({ data, totalPages });
+                } else {
+                    res.status(400).json("Cannot find data");
+                }
+            }).sort({ createdAt: -1 }).skip(skip_Value).limit(limitValue);
+
     }
     catch (error) {
         res.status(500).json(error);
