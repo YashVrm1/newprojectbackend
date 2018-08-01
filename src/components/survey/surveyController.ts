@@ -199,7 +199,7 @@ export const countfalse: any = async (req: Request, res: Response) => {
 export const getSurveyData = async (req: Request, res: Response) => {
     try {
         let skip_Value;
-        let limitValue = req.query.limit ? parseInt(req.query.limit) : 200;
+        let limitValue = req.query.limit ? parseInt(req.query.limit) : 100;
         if (req.query.page != undefined && req.query.page > 1) {
             skip_Value = limitValue * (req.query.page - 1);
         } else { skip_Value = 0; }

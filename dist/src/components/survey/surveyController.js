@@ -198,7 +198,7 @@ exports.countfalse = (req, res) => __awaiter(this, void 0, void 0, function* () 
 exports.getSurveyData = (req, res) => __awaiter(this, void 0, void 0, function* () {
     try {
         let skip_Value;
-        let limitValue = req.query.limit ? parseInt(req.query.limit) : 200;
+        let limitValue = req.query.limit ? parseInt(req.query.limit) : 100;
         if (req.query.page != undefined && req.query.page > 1) {
             skip_Value = limitValue * (req.query.page - 1);
         }
