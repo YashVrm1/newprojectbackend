@@ -275,6 +275,9 @@ const surveySchema = new mongoose_1.default.Schema({
     stations: {
         type: String
     },
+    reasonForLeavingMetro: {
+        type: String
+    },
     createdBy: {
         name: {
             type: String

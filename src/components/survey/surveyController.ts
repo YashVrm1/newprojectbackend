@@ -249,19 +249,27 @@ export const getSurveyData = async (req: Request, res: Response) => {
             };
             condition.createdAt = value;
         }
+        console.log(" ---- ", condition);
         await surveymongo.find(condition, { __v: 0 },
-            async (err: any, data: any) => {
+            async (err, data: any) => {
+                console.log(`user:----`, err, data);
                 if (data) {
                     const count: any = await surveymongo.count(condition);
+                    console.log('count----->', count, limitValue);
                     const totalPages = Math.ceil(count / limitValue);
+                    console.log('totalpage', totalPages);
                     res.status(200).json({ data, totalPages });
                 } else {
                     res.status(400).json("Cannot find data");
                 }
             }).sort({ createdAt: -1 }).skip(skip_Value).limit(limitValue);
-
-    }
-    catch (error) {
+        // console.log("get Package condition is:", condition);
+        // const result = await bidmongo.find(condition, {__v: 0 });
+        // const count = await bidmongo.count(condition);
+        // const totalPage = Math.ceil(count / limitValue);
+        // res.status(200).json({result, totalPage});
+    } catch (error) {
+        console.log("Error Found");
         res.status(500).json(error);
     }
 };

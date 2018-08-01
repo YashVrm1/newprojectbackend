@@ -117,7 +117,8 @@ exports.survey = (req, res) => __awaiter(this, void 0, void 0, function* () {
                     createdBy: {
                         name: employeeData.employeeName
                     },
-                    stations: req.body.stations
+                    stations: req.body.stations,
+                    reasonForLeavingMetro: req.body.reasonForLeavingMetro
                     // loggedOut: moment().format("HH:mm")
                 };
                 console.log("Obj---->", obj);
@@ -196,9 +197,26 @@ exports.countfalse = (req, res) => __awaiter(this, void 0, void 0, function* () 
 });
 exports.getSurveyData = (req, res) => __awaiter(this, void 0, void 0, function* () {
     try {
+        let skip_Value;
+        let limitValue = req.query.limit ? parseInt(req.query.limit) : 200;
+        if (req.query.page != undefined && req.query.page > 1) {
+            skip_Value = limitValue * (req.query.page - 1);
+        }
+        else {
+            skip_Value = 0;
+        }
+        if (req.query.limit != undefined) {
+            limitValue = parseInt(req.query.limit);
+        }
         const condition = {};
         if (req.body.age) {
             condition.age = new RegExp('^' + req.body.age, 'i');
+        }
+        if (req.body.stations) {
+            condition.stations = new RegExp('^' + req.body.stations, 'i');
+        }
+        if (req.body.reasonForLeavingMetro) {
+            condition.reasonForLeavingMetro = new RegExp('^' + req.body.reasonForLeavingMetro, 'i');
         }
         if (req.body.email) {
             condition.email = new RegExp('^' + req.body.email, 'i');
@@ -237,12 +255,21 @@ exports.getSurveyData = (req, res) => __awaiter(this, void 0, void 0, function* 
         yield surveyModel_1.default.find(condition, { __v: 0 }, (err, data) => __awaiter(this, void 0, void 0, function* () {
             console.log(`user:----`, err, data);
             if (data) {
-                res.status(200).json({ data });
+                const count = yield surveyModel_1.default.count(condition);
+                console.log('count----->', count, limitValue);
+                const totalPages = Math.ceil(count / limitValue);
+                console.log('totalpage', totalPages);
+                res.status(200).json({ data, totalPages });
             }
             else {
                 res.status(400).json("Cannot find data");
             }
-        }));
+        })).sort({ createdAt: -1 }).skip(skip_Value).limit(limitValue);
+        // console.log("get Package condition is:", condition);
+        // const result = await bidmongo.find(condition, {__v: 0 });
+        // const count = await bidmongo.count(condition);
+        // const totalPage = Math.ceil(count / limitValue);
+        // res.status(200).json({result, totalPage});
     }
     catch (error) {
         console.log("Error Found");
